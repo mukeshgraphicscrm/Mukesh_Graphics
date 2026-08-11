@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { CheckCircle2, Loader2 } from 'lucide-react';
+import { CheckCircle2, Loader2, MapPin, Phone, Mail, Clock, ArrowRight } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
+    company: '',
     email: '',
     phone: '',
-    product: '',
-    quantity: '',
-    finish: ''
+    requirements: ''
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -24,7 +23,7 @@ const Contact = () => {
       });
       if (response.ok) {
         setSuccess(true);
-        setFormData({ name: '', email: '', phone: '', product: '', quantity: '', finish: '' });
+        setFormData({ name: '', company: '', email: '', phone: '', requirements: '' });
       }
     } catch (err) {
       console.error(err);
@@ -33,48 +32,78 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-white relative">
+    <section id="contact" className="py-24 bg-brand-light relative">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="bg-brand-dark rounded-[3rem] p-8 md:p-16 text-white grid lg:grid-cols-2 gap-16 relative overflow-hidden">
+        <div className="rounded-[3rem] overflow-hidden grid lg:grid-cols-2 shadow-2xl">
           
-          <div className="absolute top-0 right-0 w-96 h-96 bg-brand-orange/20 blur-[100px] rounded-full pointer-events-none" />
-          
-          <div className="relative z-10">
-            <h2 className="text-4xl md:text-5xl font-serif font-medium leading-tight mb-6">
-              Get a custom packaging quote in <span className="text-brand-orange italic font-normal">24 hours.</span>
+          {/* Left Column (Dark) */}
+          <div className="bg-[#1a110b] p-10 md:p-16 text-white relative">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-orange/10 mb-10">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-orange"></span>
+              <span className="text-[0.7rem] font-bold text-brand-orange uppercase tracking-widest">Let's build together</span>
+            </div>
+            
+            <h2 className="text-[2.5rem] md:text-[3.25rem] font-serif font-bold leading-[1.1] mb-6">
+              Get a custom<br/>packaging quote in <span className="text-brand-orange">24 hours.</span>
             </h2>
-            <p className="text-gray-400 text-lg mb-12">
+            
+            <p className="text-[#a89f98] text-[1.05rem] mb-12 max-w-md">
               Tell us about your product, quantity and finish — our team will send back a detailed quote with samples options.
             </p>
             
-            <ul className="space-y-6">
-              <li className="flex items-start gap-4">
-                <CheckCircle2 className="text-brand-orange shrink-0 mt-1" size={20} />
-                <div>
-                  <div className="font-bold text-white mb-1">Fast Turnaround</div>
-                  <div className="text-sm text-gray-400">We'll respond within one business day.</div>
+            <div className="space-y-8 mb-12">
+              <div className="flex items-center gap-5">
+                <div className="w-10 h-10 rounded-full bg-[#2a1b12] border border-[#3d2719] flex items-center justify-center shrink-0">
+                  <MapPin className="text-brand-orange" size={16} />
                 </div>
-              </li>
-              <li className="flex items-start gap-4">
-                <CheckCircle2 className="text-brand-orange shrink-0 mt-1" size={20} />
                 <div>
-                  <div className="font-bold text-white mb-1">Factory-Direct Rates</div>
-                  <div className="text-sm text-gray-400">No middlemen, transparent pricing.</div>
+                  <div className="text-[0.65rem] font-bold text-[#8f857d] uppercase tracking-widest mb-1">Factory & Head Office</div>
+                  <div className="font-bold text-white text-[1rem]">Industrial Area, Phase-2, New Delhi, India</div>
                 </div>
-              </li>
-              <li className="flex items-start gap-4">
-                <CheckCircle2 className="text-brand-orange shrink-0 mt-1" size={20} />
+              </div>
+              <div className="flex items-center gap-5">
+                <div className="w-10 h-10 rounded-full bg-[#2a1b12] border border-[#3d2719] flex items-center justify-center shrink-0">
+                  <Phone className="text-brand-orange" size={16} />
+                </div>
                 <div>
-                  <div className="font-bold text-white mb-1">High-Volume Capacity</div>
-                  <div className="text-sm text-gray-400">Ready for enterprise-scale orders.</div>
+                  <div className="text-[0.65rem] font-bold text-[#8f857d] uppercase tracking-widest mb-1">Call Us</div>
+                  <div className="font-bold text-white text-[1rem]">+91 98100 00000</div>
                 </div>
-              </li>
-            </ul>
+              </div>
+              <div className="flex items-center gap-5">
+                <div className="w-10 h-10 rounded-full bg-[#2a1b12] border border-[#3d2719] flex items-center justify-center shrink-0">
+                  <Mail className="text-brand-orange" size={16} />
+                </div>
+                <div>
+                  <div className="text-[0.65rem] font-bold text-[#8f857d] uppercase tracking-widest mb-1">Email</div>
+                  <div className="font-bold text-white text-[1rem]">sales@mukeshgraphics.com</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-5">
+                <div className="w-10 h-10 rounded-full bg-[#2a1b12] border border-[#3d2719] flex items-center justify-center shrink-0">
+                  <Clock className="text-brand-orange" size={16} />
+                </div>
+                <div>
+                  <div className="text-[0.65rem] font-bold text-[#8f857d] uppercase tracking-widest mb-1">Working Hours</div>
+                  <div className="font-bold text-white text-[1rem]">Mon - Sat · 9:30 AM - 7:00 PM</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="h-[220px] border border-white/5 rounded-3xl flex items-center justify-center bg-[#21150e] relative overflow-hidden">
+               <span className="flex items-center gap-2 text-brand-orange text-[0.8rem] font-medium relative z-10">
+                  <MapPin size={16}/> Interactive map
+               </span>
+            </div>
           </div>
           
-          <div className="bg-white text-brand-dark rounded-3xl p-8 shadow-2xl relative z-10">
+          {/* Right Column (Form) */}
+          <div className="bg-white p-10 md:p-16 md:pl-20">
+            <h3 className="text-[2rem] font-serif font-bold text-brand-dark mb-2">Send an enquiry</h3>
+            <p className="text-gray-500 mb-10 text-[0.95rem]">We'll respond within one business day.</p>
+
             {success ? (
-              <div className="h-full flex flex-col items-center justify-center text-center py-12">
+              <div className="h-[400px] flex flex-col items-center justify-center text-center py-12">
                 <div className="w-16 h-16 bg-green-100 text-green-500 rounded-full flex items-center justify-center mb-6">
                   <CheckCircle2 size={32} />
                 </div>
@@ -85,43 +114,36 @@ const Contact = () => {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-widest mb-3">Full Name</label>
+                    <input required type="text" className="w-full px-6 py-3.5 rounded-full bg-[#FCF8F5] border border-[#F2EAE4] focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-colors text-sm" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="Your name" />
+                  </div>
+                  <div>
+                    <label className="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-widest mb-3">Company</label>
+                    <input type="text" className="w-full px-6 py-3.5 rounded-full bg-[#FCF8F5] border border-[#F2EAE4] focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-colors text-sm" value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} placeholder="Company / Brand" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-widest mb-3">Email</label>
+                    <input required type="email" className="w-full px-6 py-3.5 rounded-full bg-[#FCF8F5] border border-[#F2EAE4] focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-colors text-sm" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="you@brand.com" />
+                  </div>
+                  <div>
+                    <label className="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-widest mb-3">Phone</label>
+                    <input required type="tel" className="w-full px-6 py-3.5 rounded-full bg-[#FCF8F5] border border-[#F2EAE4] focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-colors text-sm" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} placeholder="+91 ..." />
+                  </div>
+                </div>
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Name</label>
-                  <input required type="text" className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-colors" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="Your full name" />
+                  <label className="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-widest mb-3">Product & Requirements</label>
+                  <textarea required rows="4" className="w-full px-6 py-4 rounded-[1.5rem] bg-[#FCF8F5] border border-[#F2EAE4] focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-colors text-sm resize-none" value={formData.requirements} onChange={e => setFormData({...formData, requirements: e.target.value})} placeholder="Box type, dimensions, quantity, finish..." />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-1">Email</label>
-                    <input required type="email" className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-colors" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="Email address" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-1">Phone</label>
-                    <input required type="tel" className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-colors" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} placeholder="Phone number" />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Product Details</label>
-                  <input required type="text" className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-colors" value={formData.product} onChange={e => setFormData({...formData, product: e.target.value})} placeholder="What are you packaging?" />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-1">Quantity</label>
-                    <input required type="text" className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-colors" value={formData.quantity} onChange={e => setFormData({...formData, quantity: e.target.value})} placeholder="e.g. 5000" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-1">Finish/Print</label>
-                    <select className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-colors text-gray-600" value={formData.finish} onChange={e => setFormData({...formData, finish: e.target.value})}>
-                      <option value="">Select option...</option>
-                      <option value="standard">Standard Print</option>
-                      <option value="premium">Premium (Foil/UV)</option>
-                      <option value="unprinted">Unprinted / Kraft</option>
-                      <option value="unsure">Not sure yet</option>
-                    </select>
-                  </div>
-                </div>
-                <button type="submit" disabled={loading} className="w-full py-4 mt-4 bg-brand-orange hover:bg-orange-600 text-white font-bold rounded-xl transition-colors shadow-lg shadow-brand-orange/30 flex justify-center items-center gap-2">
-                  {loading ? <Loader2 className="animate-spin" size={20} /> : 'Request Quote'}
+                
+                <button type="submit" disabled={loading} className="w-full py-4 mt-2 bg-brand-orange hover:bg-[#eb6a2d] text-white font-bold rounded-full transition-colors shadow-lg shadow-brand-orange/20 flex justify-center items-center gap-2 text-[0.95rem]">
+                  {loading ? <Loader2 className="animate-spin" size={20} /> : (
+                    <>Request my quote <ArrowRight size={18} strokeWidth={2.5}/></>
+                  )}
                 </button>
               </form>
             )}
