@@ -21,12 +21,15 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-brand-light to-orange-50/50">
+    <section className="py-24 bg-[#FCECE0]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="max-w-2xl mb-16">
-          <h2 className="text-sm font-bold text-brand-orange uppercase tracking-wider mb-4">Client Feedback</h2>
-          <h3 className="text-4xl md:text-5xl font-serif font-medium leading-tight text-brand-dark">
-            Loved by brands that <span className="text-brand-orange italic font-normal">refuse</span> to compromise.
+        <div className="max-w-4xl mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand-orange/40 bg-brand-orange/10 mb-8">
+            <span className="w-2 h-2 rounded-full bg-brand-orange"></span>
+            <h2 className="text-[0.8rem] font-bold text-brand-orange uppercase tracking-[0.15em]">Client Voices</h2>
+          </div>
+          <h3 className="text-5xl md:text-[4.5rem] font-serif font-bold leading-[1.1] text-[#4a3b32]">
+            Loved by brands that <span className="text-brand-orange">refuse <br className="hidden md:block" />to compromise.</span>
           </h3>
         </div>
         
