@@ -5,23 +5,23 @@ const Testimonials = () => {
   const testimonials = [
     {
       text: "Their rigid boxes turned our launch into a viral unboxing. Print quality, fit and finish — flawless every single run.",
-      author: "Rahul S.",
-      company: "Cosmetic Brand Co."
+      author: "Anjali Mehta",
+      company: "Brand Lead, Lumen Beauty"
     },
     {
       text: "We moved 4 lakh food cartons in a quarter without a single defect complaint. Mukesh Graphics is now our default partner.",
-      author: "Priya M.",
-      company: "Food Enterprises"
+      author: "Rohit Sharma",
+      company: "Ops Director, Freshbite Foods"
     },
     {
       text: "From custom die-lines to EPE inserts, they engineered packaging that protects fragile electronics beautifully.",
-      author: "Vikram K.",
-      company: "Tech Solutions"
+      author: "Kavya Rao",
+      company: "Founder, Nova Tech"
     }
   ];
 
   return (
-    <section className="py-24 bg-[#FCECE0]">
+    <section className="py-24 bg-gradient-to-b from-[#FFE4CF] via-[#FFF3EB] to-[#FFE4CF]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="max-w-4xl mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand-orange/40 bg-brand-orange/10 mb-8">
@@ -35,20 +35,20 @@ const Testimonials = () => {
         
         <div className="grid md:grid-cols-3 gap-6">
           {testimonials.map((t, idx) => (
-            <div key={idx} className="bg-white p-8 rounded-3xl shadow-lg border border-orange-100 hover:-translate-y-2 transition-transform duration-300">
-              <div className="flex gap-1 text-brand-orange mb-6">
-                {[...Array(5)].map((_, i) => <Star key={i} size={18} fill="currentColor" />)}
+            <div key={idx} className="bg-[#FDF5F0] p-8 md:p-9 rounded-[2rem] hover:-translate-y-2 transition-transform duration-300">
+              <div className="flex gap-[3px] text-brand-orange mb-5">
+                {[...Array(5)].map((_, i) => <Star key={i} size={17} fill="currentColor" strokeWidth={0} />)}
               </div>
-              <p className="text-gray-700 font-medium text-lg leading-relaxed mb-8">
-                "{t.text}"
+              <p className="text-[#201c19] font-serif text-[1.05rem] leading-[1.6] mb-10">
+                “{t.text}”
               </p>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-brand-orange/10 flex items-center justify-center text-brand-orange font-bold font-serif">
-                  {t.author.charAt(0)}
+                <div className="w-[42px] h-[42px] rounded-full bg-brand-orange flex items-center justify-center text-white font-bold text-xs tracking-wide">
+                  {t.author.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div>
-                  <div className="font-bold text-brand-dark">{t.author}</div>
-                  <div className="text-sm text-gray-500">{t.company}</div>
+                  <div className="font-bold text-[#201c19] text-[0.9rem] leading-tight">{t.author}</div>
+                  <div className="text-[0.75rem] text-gray-500 mt-[2px]">{t.company}</div>
                 </div>
               </div>
             </div>
