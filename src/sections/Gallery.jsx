@@ -14,12 +14,16 @@ const Gallery = () => {
           className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
         >
           <div>
-            <motion.h2 variants={fadeInUp} className="text-sm font-bold text-brand-orange uppercase tracking-wider mb-4">Portfolio</motion.h2>
-            <motion.h3 variants={fadeInUp} className="text-4xl md:text-5xl font-serif font-medium leading-tight text-brand-dark">
-              Work worth <span className="text-brand-orange italic font-normal">unboxing.</span>
+            <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand-orange/30 bg-brand-orange/10 mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-orange"></span>
+              <h2 className="text-[0.75rem] font-bold text-brand-orange uppercase tracking-[0.15em]">Gallery</h2>
+            </motion.div>
+            
+            <motion.h3 variants={fadeInUp} className="text-5xl md:text-[4rem] font-serif font-bold leading-[1.1] text-[#111111]">
+              Work worth <span className="text-brand-orange">unboxing.</span>
             </motion.h3>
           </div>
-          <motion.p variants={fadeInUp} className="text-gray-600 max-w-sm">
+          <motion.p variants={fadeInUp} className="text-[0.95rem] text-gray-500 max-w-[400px] md:pb-3">
             A glimpse into recent runs — from print-forward cosmetic cartons to industrial shipping crates.
           </motion.p>
         </motion.div>
