@@ -59,9 +59,9 @@ const Features = () => {
                 key={idx}
                 className="p-6 md:p-7 rounded-[1.75rem] bg-white border border-[#F2F2F2] shadow-[0_4px_20px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgba(244,139,67,0.12)] hover:border-[#F48B43]/30 hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#F48B43]/15 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-[#F48B43]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                 <div className="relative z-10">
-                  <div className="w-11 h-11 rounded-full bg-[#FDF3EA] flex items-center justify-center text-[#F48B43] mb-5 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-11 h-11 rounded-full bg-[#FDF3EA] group-hover:bg-[#F48B43] flex items-center justify-center text-[#F48B43] group-hover:text-white mb-5 transition-all duration-300">
                     {React.cloneElement(feature.icon, { size: 20, strokeWidth: 1.5 })}
                   </div>
                   <h4 className="text-[1.15rem] font-serif font-bold text-[#1A1A1A] mb-2">{feature.title}</h4>
