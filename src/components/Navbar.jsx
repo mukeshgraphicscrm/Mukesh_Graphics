@@ -33,14 +33,7 @@ const Navbar = () => {
 
         {/* Logo */}
         <div className="flex items-center gap-2.5 cursor-pointer">
-          <div className="w-10 h-10 rounded-full bg-brand-orange flex items-center justify-center text-white">
-            {/* Custom 3D Box SVG matching the logo */}
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-              <line x1="12" y1="22.08" x2="12" y2="12"></line>
-            </svg>
-          </div>
+          <img src="/Title_Logo.png" alt="Mukesh Graphics Logo" className="w-10 h-10 object-contain" />
           <span className="font-serif font-bold text-[24px] tracking-tight text-brand-dark">
             Mukesh <span className="text-brand-orange font-medium">Graphics</span>
           </span>

@@ -8,9 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-6 cursor-pointer">
-              <div className="w-8 h-8 rounded-full bg-brand-orange flex items-center justify-center text-white">
-                <Package size={18} />
-              </div>
+              <img src="/Title_Logo.png" alt="Mukesh Graphics Logo" className="w-8 h-8 object-contain" />
               <span className="font-serif font-bold text-xl tracking-tight">Mukesh Graphics</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
