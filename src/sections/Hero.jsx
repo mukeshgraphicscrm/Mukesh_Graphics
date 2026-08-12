@@ -67,8 +67,8 @@ const Hero = () => {
           </motion.div>
 
           {/* Image/Visuals */}
-          <div className="relative h-full flex items-center justify-center lg:-mt-4">
-            <div className="relative w-full max-w-[500px] lg:max-w-none rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#4A0B0B] to-[#1A0303] aspect-[4/4] lg:aspect-[4/4.2] shadow-2xl">
+          <div className="relative h-full flex items-center justify-center lg:justify-end lg:-mt-4">
+            <div className="relative w-full max-w-[500px] lg:max-w-[92%] rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#4A0B0B] to-[#1A0303] aspect-[4/4] lg:aspect-[4/4.2] shadow-2xl">
 
               {/* 3D Floating Boxes */}
               <motion.div
