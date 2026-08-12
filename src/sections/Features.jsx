@@ -57,7 +57,7 @@ const Features = () => {
               <motion.div
                 variants={fadeInUp}
                 key={idx}
-                className="p-6 md:p-7 rounded-[1.75rem] bg-white border border-[#F2F2F2] shadow-[0_4px_20px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgba(244,139,67,0.12)] hover:border-[#F48B43]/30 hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
+                className="p-6 md:p-7 rounded-[1.75rem] bg-white border border-[#F2F2F2] shadow-[0_4px_20px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgba(244,139,67,0.12)] hover:border-[#F48B43]/30 hover:-translate-y-1 transition-all duration-300 group cursor-pointer relative overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-[#F48B43]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                 <div className="relative z-10">

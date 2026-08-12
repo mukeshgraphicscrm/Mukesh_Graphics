@@ -42,7 +42,7 @@ const Process = () => {
             className="flex md:justify-between gap-8 md:gap-4 min-w-max md:min-w-0 px-4 md:px-0"
           >
             {steps.map((step, idx) => (
-              <motion.div variants={scaleUp} key={idx} className="relative flex flex-col items-center group">
+              <motion.div variants={scaleUp} key={idx} className="relative flex flex-col items-center group cursor-pointer">
                 <div className="w-16 h-16 rounded-full bg-white border-2 border-brand-orange flex items-center justify-center text-brand-orange font-bold text-xl mb-4 group-hover:bg-brand-orange group-hover:text-white transition-colors duration-300 shadow-lg relative z-10">
                   {step.num}
                 </div>
