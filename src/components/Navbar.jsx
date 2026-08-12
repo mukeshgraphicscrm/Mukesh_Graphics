@@ -33,26 +33,26 @@ const Navbar = () => {
       initial={{ y: -100, opacity: 0, x: "-50%" }}
       animate={{ y: 0, opacity: 1, x: "-50%" }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed left-1/2 z-50 w-[95%] max-w-[1350px] transition-all duration-300 ${isScrolled ? 'top-4' : 'top-8'}`}
+      className={`fixed left-1/2 z-50 w-[95%] max-w-[1350px] transition-all duration-300 ${isScrolled ? 'top-2' : 'top-4'}`}
     >
-      <div className={`px-4 md:px-8 flex items-center justify-between rounded-[2rem] transition-all duration-300 ${isScrolled ? 'bg-[#FFFDF9]/60 backdrop-blur-xl py-3.5 shadow-sm border border-white/40' : 'bg-transparent py-3 border border-[#1F1916]/10'}`}>
+      <div className={`px-4 md:px-6 flex items-center justify-between rounded-[2rem] transition-all duration-300 ${isScrolled ? 'bg-[#FFFDF9]/70 backdrop-blur-xl py-2 shadow-sm border border-white/40' : 'bg-transparent py-2 border border-[#1F1916]/10'}`}>
 
         {/* Logo */}
         <div className="flex items-center gap-2.5 cursor-pointer" onClick={(e) => handleNavClick(e, '#root')}>
-          <img src="/Title_Logo.png" alt="Mukesh Graphics Logo" className="w-10 h-10 object-contain" />
-          <span className="font-serif font-bold text-xl md:text-[24px] tracking-tight text-brand-dark">
+          <img src="/Title_Logo.png" alt="Mukesh Graphics Logo" className="w-8 h-8 object-contain" />
+          <span className="font-serif font-bold text-xl md:text-[22px] tracking-tight text-brand-dark">
             Mukesh <span className="text-brand-orange font-medium">Graphics</span>
           </span>
         </div>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-2">
+        <div className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
             <motion.a
               key={link.name}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className="text-[14px] font-medium text-gray-700 hover:text-[#FF7B3B] hover:bg-[#FF7B3B]/15 px-5 py-2 rounded-full transition-all duration-300 tracking-wide cursor-pointer"
+              className="text-[13.5px] font-medium text-gray-700 hover:text-[#FF7B3B] hover:bg-[#FF7B3B]/15 px-4 py-1.5 rounded-full transition-all duration-300 tracking-wide cursor-pointer"
             >
               {link.name}
             </motion.a>
@@ -65,7 +65,7 @@ const Navbar = () => {
           whileTap={{ scale: 0.95 }}
           className="hidden md:flex items-center"
         >
-          <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="bg-[#1F1916] text-white px-7 py-3 rounded-full text-sm font-bold hover:bg-[#FF7B3B] transition-colors shadow-[0_4px_14px_rgba(31,25,22,0.2)] cursor-pointer">
+          <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="bg-[#1F1916] text-white px-5 py-2.5 rounded-full text-[13px] md:text-sm font-bold hover:bg-[#FF7B3B] transition-colors shadow-[0_4px_14px_rgba(31,25,22,0.2)] cursor-pointer">
             Get a Quote &rarr;
           </a>
         </motion.div>
