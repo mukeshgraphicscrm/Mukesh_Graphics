@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CheckCircle2, Loader2, MapPin, Phone, Mail, Clock, ArrowRight, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -14,13 +14,35 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
+  useEffect(() => {
+    let timer;
+    if (success) {
+      timer = setTimeout(() => {
+        setSuccess(false);
+      }, 3000);
+    }
+    return () => clearTimeout(timer);
+  }, [success]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     const newErrors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
     if (!formData.name.trim()) newErrors.name = 'Your name is required';
-    if (!formData.email.trim()) newErrors.email = 'Email address is required';
-    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email address is required';
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    } else if (formData.phone.length !== 10) {
+      newErrors.phone = 'Must be exactly 10 digits';
+    }
     if (!formData.requirements.trim()) newErrors.requirements = 'Please tell us your requirements';
     
     if (Object.keys(newErrors).length > 0) {
@@ -161,7 +183,11 @@ const Contact = () => {
                   </div>
                   <div>
                     <label className="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-widest mb-3">Phone</label>
-                    <input type="tel" className={`w-full px-6 py-3.5 rounded-full bg-[#FCF8F5] border ${errors.phone ? 'border-[#FF4A4A] focus:ring-[#FF4A4A]' : 'border-[#F2EAE4] focus:border-brand-orange focus:ring-brand-orange'} focus:outline-none focus:ring-1 transition-colors text-sm`} value={formData.phone} onChange={e => {setFormData({...formData, phone: e.target.value}); setErrors({...errors, phone: null})}} placeholder="+91 ..." />
+                    <input type="tel" maxLength="10" className={`w-full px-6 py-3.5 rounded-full bg-[#FCF8F5] border ${errors.phone ? 'border-[#FF4A4A] focus:ring-[#FF4A4A]' : 'border-[#F2EAE4] focus:border-brand-orange focus:ring-brand-orange'} focus:outline-none focus:ring-1 transition-colors text-sm`} value={formData.phone} onChange={e => {
+                      const val = e.target.value.replace(/\D/g, '').slice(0, 10);
+                      setFormData({...formData, phone: val}); 
+                      setErrors({...errors, phone: null});
+                    }} placeholder="e.g. 98100 00000" />
                     <AnimatePresence>
                       {errors.phone && (
                         <motion.div initial={{ opacity: 0, height: 0, marginTop: 0 }} animate={{ opacity: 1, height: 'auto', marginTop: 8 }} exit={{ opacity: 0, height: 0, marginTop: 0 }} className="text-[#FF4A4A] text-[0.75rem] flex items-center gap-1.5 font-bold px-4 overflow-hidden">

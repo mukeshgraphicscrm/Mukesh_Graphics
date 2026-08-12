@@ -9,16 +9,15 @@ app.use(express.json());
 
 app.post('/api/quote', async (req, res) => {
   try {
-    const { product, quantity, finish, name, email, phone } = req.body;
+    const { name, company, email, phone, requirements } = req.body;
     
-    // Add to quotes collection in Firestore
-    const docRef = await adminDb.collection('quote_requests').add({
-      product,
-      quantity,
-      finish,
+    // Add to contact form collection in Firestore
+    const docRef = await adminDb.collection('contact form').add({
       name,
+      company: company || '',
       email,
       phone,
+      requirements,
       createdAt: new Date().toISOString(),
       status: 'new'
     });
