@@ -37,12 +37,12 @@ const Hero = () => {
               <span className="font-serif italic text-5xl md:text-6xl lg:text-[5.5rem] pr-2 font-medium tracking-normal">&amp;</span> elevate every<br />brand.
             </motion.h1>
 
-            <motion.p variants={fadeInUp} className="text-[17px] text-[#554B45] mb-8 lg:mb-10 max-w-[460px] leading-[1.6] font-normal">
+            <motion.p variants={fadeInUp} className="text-[17px] text-[#554B45] mb-8 lg:mb-10 max-w-[560px] leading-[1.6] font-normal">
               From small product boxes to heavy-duty industrial packaging, Mukesh Graphics manufactures high-quality custom boxes in every size, design and specification — crafted to strengthen your brand and protect your products.
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-4 mb-10 lg:mb-12">
-              <motion.a onClick={(e) => smoothScroll(e, '#contact')} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="#contact" className="inline-flex items-center gap-2 bg-[#FF7B3B] text-white px-6 md:px-8 py-3.5 rounded-full text-[14px] font-bold hover:bg-orange-500 transition-colors shadow-lg shadow-orange-500/20 cursor-pointer">
+              <motion.a onClick={(e) => smoothScroll(e, '#contact')} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="#contact" className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FF954B] to-[#FF6B2B] text-white px-6 md:px-8 py-3.5 rounded-full text-[14px] font-bold hover:from-[#FFA25B] hover:to-[#FF7B3B] transition-all shadow-lg shadow-orange-500/30 cursor-pointer">
                 Get a Free Quote <span className="text-xl leading-none font-normal mt-[-2px]">&rarr;</span>
               </motion.a>
               <motion.a onClick={(e) => smoothScroll(e, '#solutions')} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="#solutions" className="inline-flex items-center gap-2 bg-white text-[#1F1916] px-6 md:px-8 py-3.5 rounded-full text-[14px] font-bold shadow-sm hover:bg-gray-50 transition-all cursor-pointer">
@@ -68,7 +68,7 @@ const Hero = () => {
 
           {/* Image/Visuals */}
           <div className="relative h-full flex items-center justify-center lg:justify-end lg:-mt-4">
-            <div className="relative w-full max-w-[500px] lg:max-w-[92%] rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#4A0B0B] to-[#1A0303] aspect-[4/4] lg:aspect-[4/4.2] shadow-2xl">
+            <div className="relative w-full max-w-[500px] lg:max-w-[88%] rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#4A0B0B] to-[#1A0303] aspect-[4/4] lg:aspect-[4/5] shadow-2xl">
 
               {/* 3D Floating Boxes */}
               <motion.div
