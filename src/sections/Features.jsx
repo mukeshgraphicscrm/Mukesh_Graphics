@@ -18,12 +18,12 @@ const Features = () => {
   ];
 
   return (
-    <section className="py-24 bg-[#FDF3E7] relative">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-3 gap-16">
+    <section className="pt-16 pb-24 lg:pt-20 bg-[#FDF3E7] relative">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-[95%]">
+        <div className="grid lg:grid-cols-5 gap-16 lg:gap-20">
 
-          <div className="lg:col-span-1">
-            <div className="lg:sticky lg:top-32">
+          <div className="lg:col-span-2 lg:pr-8">
+            <div className="lg:sticky lg:top-24">
               <motion.div
                 variants={staggerContainer}
                 initial="hidden"
@@ -34,12 +34,12 @@ const Features = () => {
                   <span className="w-1.5 h-1.5 rounded-full bg-[#F48B43]"></span>
                   <span className="text-[0.7rem] font-bold text-[#F48B43] uppercase tracking-[0.15em]">Why Mukesh Graphics</span>
                 </motion.div>
-                <motion.h3 variants={fadeInUp} className="text-3xl md:text-5xl lg:text-[3.25rem] font-serif font-bold leading-[1.1] mb-8 text-[#1A1A1A] tracking-tight">
+                <motion.h3 variants={fadeInUp} className="text-4xl md:text-6xl lg:text-[4rem] font-serif font-bold leading-[1.05] mb-8 text-[#1A1A1A] tracking-tight">
                   Craftsmanship <br className="hidden lg:block" />
                   you can <span className="text-[#F48B43] font-normal">feel</span> in <br className="hidden lg:block" />
                   every fold.
                 </motion.h3>
-                <motion.p variants={fadeInUp} className="text-[#595959] text-[1.05rem] leading-[1.8] font-medium pr-4">
+                <motion.p variants={fadeInUp} className="text-[#595959] text-[1.15rem] leading-[1.7] font-medium pr-4">
                   Two decades of packaging expertise, distilled into a manufacturing process that obsesses over strength, print, finish and speed — so your product always arrives looking exactly like your brand.
                 </motion.p>
               </motion.div>
@@ -51,7 +51,7 @@ const Features = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="lg:col-span-2 grid sm:grid-cols-2 gap-5"
+            className="lg:col-span-3 grid sm:grid-cols-2 gap-5 lg:gap-6"
           >
             {features.map((feature, idx) => (
               <motion.div

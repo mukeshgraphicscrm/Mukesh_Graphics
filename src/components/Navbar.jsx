@@ -72,7 +72,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden p-2 text-brand-dark relative w-10 h-10 flex items-center justify-center"
+          className="md:hidden bg-[#1F1916] text-white relative w-10 h-10 rounded-full flex items-center justify-center shadow-md active:scale-95 transition-all"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           <AnimatePresence mode="wait">
@@ -85,7 +85,7 @@ const Navbar = () => {
                 transition={{ duration: 0.2, ease: "easeInOut" }}
                 className="absolute"
               >
-                <X size={24} />
+                <X size={20} />
               </motion.div>
             ) : (
               <motion.div
@@ -96,7 +96,7 @@ const Navbar = () => {
                 transition={{ duration: 0.2, ease: "easeInOut" }}
                 className="absolute"
               >
-                <Menu size={24} />
+                <Menu size={20} />
               </motion.div>
             )}
           </AnimatePresence>
