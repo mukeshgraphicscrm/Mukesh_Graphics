@@ -29,12 +29,12 @@ const Navbar = () => {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed left-1/2 z-50 w-[95%] max-w-[1350px] transition-all duration-300 ${isScrolled ? 'top-4' : 'top-8'}`}
     >
-      <div className={`px-8 flex items-center justify-between rounded-[2rem] transition-all duration-300 ${isScrolled ? 'bg-[#FFFDF9]/60 backdrop-blur-xl py-3.5 shadow-sm border border-white/40' : 'bg-transparent py-3 border border-[#1F1916]/10'}`}>
+      <div className={`px-4 md:px-8 flex items-center justify-between rounded-[2rem] transition-all duration-300 ${isScrolled ? 'bg-[#FFFDF9]/60 backdrop-blur-xl py-3.5 shadow-sm border border-white/40' : 'bg-transparent py-3 border border-[#1F1916]/10'}`}>
 
         {/* Logo */}
         <div className="flex items-center gap-2.5 cursor-pointer">
           <img src="/Title_Logo.png" alt="Mukesh Graphics Logo" className="w-10 h-10 object-contain" />
-          <span className="font-serif font-bold text-[24px] tracking-tight text-brand-dark">
+          <span className="font-serif font-bold text-xl md:text-[24px] tracking-tight text-brand-dark">
             Mukesh <span className="text-brand-orange font-medium">Graphics</span>
           </span>
         </div>

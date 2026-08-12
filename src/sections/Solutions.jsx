@@ -35,7 +35,7 @@ const Solutions = () => {
               <span className="w-1.5 h-1.5 rounded-full bg-brand-orange"></span>
               <h2 className="text-[0.75rem] font-bold text-brand-orange uppercase tracking-[0.15em]">Our Packaging Solutions</h2>
             </motion.div>
-            <motion.h3 variants={fadeInUp} className="text-4xl md:text-5xl lg:text-[4rem] font-serif font-bold leading-[1.1]">
+            <motion.h3 variants={fadeInUp} className="text-3xl md:text-4xl lg:text-[4rem] font-serif font-bold leading-[1.1]">
               A packaging line for<br />
               <span className="text-brand-orange">every product</span> you make.
             </motion.h3>

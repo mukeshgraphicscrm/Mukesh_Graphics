@@ -28,7 +28,7 @@ const Industries = () => {
               <h2 className="text-[0.75rem] font-bold text-brand-orange uppercase tracking-[0.15em]">Industries We Serve</h2>
             </motion.div>
             
-            <motion.h3 variants={fadeInUp} className="text-5xl md:text-[4rem] font-serif font-bold leading-[1.1] mb-8 text-[#111111]">
+            <motion.h3 variants={fadeInUp} className="text-4xl md:text-[4rem] font-serif font-bold leading-[1.1] mb-8 text-[#111111]">
               Trusted by brands<br />
               across <span className="text-brand-orange">twelve</span><br />
               <span className="text-brand-orange">industries.</span>
@@ -55,7 +55,7 @@ const Industries = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
-            className="relative aspect-square flex items-center justify-center max-w-[500px] mx-auto w-full"
+            className="relative aspect-square flex items-center justify-center max-w-[500px] mx-auto w-full scale-90 sm:scale-100"
           >
             {/* Soft radial glow behind the center */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,127,63,0.15),transparent_60%)] pointer-events-none" />

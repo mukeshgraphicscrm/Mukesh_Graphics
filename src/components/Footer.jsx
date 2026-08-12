@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#130c08] text-white pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-12 md:mb-16">
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-6 cursor-pointer">
               <img src="/Title_Logo.png" alt="Mukesh Graphics Logo" className="w-8 h-8 object-contain" />

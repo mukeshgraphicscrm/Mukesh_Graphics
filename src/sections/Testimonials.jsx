@@ -28,7 +28,7 @@ const Testimonials = () => {
             <span className="w-2 h-2 rounded-full bg-brand-orange"></span>
             <h2 className="text-[0.8rem] font-bold text-brand-orange uppercase tracking-[0.15em]">Client Voices</h2>
           </div>
-          <h3 className="text-5xl md:text-[4.5rem] font-serif font-bold leading-[1.1] text-[#4a3b32]">
+          <h3 className="text-3xl md:text-[4.5rem] font-serif font-bold leading-[1.1] text-[#4a3b32]">
             Loved by brands that <span className="text-brand-orange">refuse <br className="hidden md:block" />to compromise.</span>
           </h3>
         </div>

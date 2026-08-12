@@ -34,7 +34,7 @@ const Features = () => {
                   <span className="w-1.5 h-1.5 rounded-full bg-[#F48B43]"></span>
                   <span className="text-[0.7rem] font-bold text-[#F48B43] uppercase tracking-[0.15em]">Why Mukesh Graphics</span>
                 </motion.div>
-                <motion.h3 variants={fadeInUp} className="text-4xl md:text-5xl lg:text-[3.25rem] font-serif font-bold leading-[1.1] mb-8 text-[#1A1A1A] tracking-tight">
+                <motion.h3 variants={fadeInUp} className="text-3xl md:text-5xl lg:text-[3.25rem] font-serif font-bold leading-[1.1] mb-8 text-[#1A1A1A] tracking-tight">
                   Craftsmanship <br className="hidden lg:block" />
                   you can <span className="text-[#F48B43] font-normal">feel</span> in <br className="hidden lg:block" />
                   every fold.

@@ -31,9 +31,9 @@ const Hero = () => {
               CUSTOM PACKAGING MANUFACTURER • SINCE 2004
             </motion.div>
 
-            <motion.h1 variants={fadeInUp} className="text-[3.2rem] lg:text-[4.8rem] font-serif font-bold leading-[1.02] tracking-tighter mb-8 text-[#1F1916]">
+            <motion.h1 variants={fadeInUp} className="text-4xl md:text-[3.2rem] lg:text-[4.8rem] font-serif font-bold leading-[1.02] tracking-tighter mb-8 text-[#1F1916]">
               Boxes that <span className="text-[#FF7B3B] font-normal italic relative">protect,<svg className="absolute w-[105%] h-[12px] -bottom-1 -left-2 text-[#FF7B3B]/40" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="2.5" fill="none" /></svg></span><br />impress<br />
-              <span className="font-serif italic text-6xl lg:text-[5.5rem] pr-2 font-medium tracking-normal">&amp;</span> elevate every<br />brand.
+              <span className="font-serif italic text-5xl md:text-6xl lg:text-[5.5rem] pr-2 font-medium tracking-normal">&amp;</span> elevate every<br />brand.
             </motion.h1>
 
             <motion.p variants={fadeInUp} className="text-[17px] text-[#554B45] mb-12 max-w-[460px] leading-[1.6] font-normal">
@@ -41,15 +41,15 @@ const Hero = () => {
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-4 mb-16">
-              <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="#contact" className="inline-flex items-center gap-2 bg-[#FF7B3B] text-white px-8 py-3.5 rounded-full text-[14px] font-bold hover:bg-orange-500 transition-colors shadow-lg shadow-orange-500/20">
+              <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="#contact" className="inline-flex items-center gap-2 bg-[#FF7B3B] text-white px-6 md:px-8 py-3.5 rounded-full text-[14px] font-bold hover:bg-orange-500 transition-colors shadow-lg shadow-orange-500/20">
                 Get a Free Quote <span className="text-xl leading-none font-normal mt-[-2px]">&rarr;</span>
               </motion.a>
-              <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="#solutions" className="inline-flex items-center gap-2 bg-white text-[#1F1916] px-8 py-3.5 rounded-full text-[14px] font-bold shadow-sm hover:bg-gray-50 transition-all">
+              <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="#solutions" className="inline-flex items-center gap-2 bg-white text-[#1F1916] px-6 md:px-8 py-3.5 rounded-full text-[14px] font-bold shadow-sm hover:bg-gray-50 transition-all">
                 Explore Products <span className="text-xl leading-none font-normal mt-[-2px]">&rsaquo;</span>
               </motion.a>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-8 text-[13px] font-medium text-[#8B7355]">
+            <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-4 md:gap-8 text-[13px] font-medium text-[#8B7355]">
               <div className="flex items-center gap-2">
                 <ShieldCheck size={18} className="text-[#FF7B3B]" />
                 ISO-grade materials
