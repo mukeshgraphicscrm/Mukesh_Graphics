@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Package } from 'lucide-react';
+import { smoothScroll } from '../utils/smoothScroll';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -13,6 +14,11 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleNavClick = (e, href) => {
+    smoothScroll(e, href);
+    setIsMobileMenuOpen(false);
+  };
 
   const navLinks = [
     { name: 'Solutions', href: '#solutions' },
@@ -32,7 +38,7 @@ const Navbar = () => {
       <div className={`px-4 md:px-8 flex items-center justify-between rounded-[2rem] transition-all duration-300 ${isScrolled ? 'bg-[#FFFDF9]/60 backdrop-blur-xl py-3.5 shadow-sm border border-white/40' : 'bg-transparent py-3 border border-[#1F1916]/10'}`}>
 
         {/* Logo */}
-        <div className="flex items-center gap-2.5 cursor-pointer">
+        <div className="flex items-center gap-2.5 cursor-pointer" onClick={(e) => handleNavClick(e, '#root')}>
           <img src="/Title_Logo.png" alt="Mukesh Graphics Logo" className="w-10 h-10 object-contain" />
           <span className="font-serif font-bold text-xl md:text-[24px] tracking-tight text-brand-dark">
             Mukesh <span className="text-brand-orange font-medium">Graphics</span>
@@ -45,7 +51,8 @@ const Navbar = () => {
             <motion.a
               key={link.name}
               href={link.href}
-              className="text-[14px] font-medium text-gray-700 hover:text-[#FF7B3B] hover:bg-[#FF7B3B]/15 px-5 py-2 rounded-full transition-all duration-300 tracking-wide"
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="text-[14px] font-medium text-gray-700 hover:text-[#FF7B3B] hover:bg-[#FF7B3B]/15 px-5 py-2 rounded-full transition-all duration-300 tracking-wide cursor-pointer"
             >
               {link.name}
             </motion.a>
@@ -58,38 +65,80 @@ const Navbar = () => {
           whileTap={{ scale: 0.95 }}
           className="hidden md:flex items-center"
         >
-          <a href="#contact" className="bg-[#1F1916] text-white px-7 py-3 rounded-full text-sm font-bold hover:bg-[#FF7B3B] transition-colors shadow-[0_4px_14px_rgba(31,25,22,0.2)]">
+          <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="bg-[#1F1916] text-white px-7 py-3 rounded-full text-sm font-bold hover:bg-[#FF7B3B] transition-colors shadow-[0_4px_14px_rgba(31,25,22,0.2)] cursor-pointer">
             Get a Quote &rarr;
           </a>
         </motion.div>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden p-2 text-brand-dark"
+          className="md:hidden p-2 text-brand-dark relative w-10 h-10 flex items-center justify-center"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          <AnimatePresence mode="wait">
+            {isMobileMenuOpen ? (
+              <motion.div
+                key="close"
+                initial={{ rotate: -90, opacity: 0, scale: 0.8 }}
+                animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                exit={{ rotate: 90, opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
+                className="absolute"
+              >
+                <X size={24} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="menu"
+                initial={{ rotate: 90, opacity: 0, scale: 0.8 }}
+                animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                exit={{ rotate: -90, opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
+                className="absolute"
+              >
+                <Menu size={24} />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </button>
       </div>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg py-4 px-6 flex flex-col gap-4 mt-4 rounded-2xl">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-base font-medium text-gray-800"
-              onClick={() => setIsMobileMenuOpen(false)}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -15, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl shadow-2xl py-6 px-6 flex flex-col gap-5 mt-4 rounded-[2rem] origin-top border border-[#1F1916]/10"
+          >
+            {navLinks.map((link, i) => (
+              <motion.a
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.1 + (i * 0.05), ease: "easeOut" }}
+                key={link.name}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="text-[1.1rem] font-serif font-medium text-gray-800 cursor-pointer border-b border-gray-100 pb-3"
+              >
+                {link.name}
+              </motion.a>
+            ))}
+            <motion.a 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.35, ease: "easeOut" }}
+              href="#contact" 
+              onClick={(e) => handleNavClick(e, '#contact')} 
+              className="bg-[#1F1916] text-white px-6 py-4 rounded-full text-center font-bold mt-2 cursor-pointer shadow-lg active:scale-95 transition-transform"
             >
-              {link.name}
-            </a>
-          ))}
-          <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="bg-brand-orange text-white px-6 py-3 rounded-full text-center font-medium mt-2">
-            Get a Quote
-          </a>
-        </div>
-      )}
+              Get a Quote &rarr;
+            </motion.a>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 };

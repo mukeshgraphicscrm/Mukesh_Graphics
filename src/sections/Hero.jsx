@@ -2,6 +2,7 @@ import { ShieldCheck, Factory, Truck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { BoxSvg } from '../components/BoxSvg';
 import { staggerContainer, fadeInUp } from '../utils/animations';
+import { smoothScroll } from '../utils/smoothScroll';
 
 const Hero = () => {
   return (
@@ -41,10 +42,10 @@ const Hero = () => {
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-4 mb-16">
-              <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="#contact" className="inline-flex items-center gap-2 bg-[#FF7B3B] text-white px-6 md:px-8 py-3.5 rounded-full text-[14px] font-bold hover:bg-orange-500 transition-colors shadow-lg shadow-orange-500/20">
+              <motion.a onClick={(e) => smoothScroll(e, '#contact')} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="#contact" className="inline-flex items-center gap-2 bg-[#FF7B3B] text-white px-6 md:px-8 py-3.5 rounded-full text-[14px] font-bold hover:bg-orange-500 transition-colors shadow-lg shadow-orange-500/20 cursor-pointer">
                 Get a Free Quote <span className="text-xl leading-none font-normal mt-[-2px]">&rarr;</span>
               </motion.a>
-              <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="#solutions" className="inline-flex items-center gap-2 bg-white text-[#1F1916] px-6 md:px-8 py-3.5 rounded-full text-[14px] font-bold shadow-sm hover:bg-gray-50 transition-all">
+              <motion.a onClick={(e) => smoothScroll(e, '#solutions')} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="#solutions" className="inline-flex items-center gap-2 bg-white text-[#1F1916] px-6 md:px-8 py-3.5 rounded-full text-[14px] font-bold shadow-sm hover:bg-gray-50 transition-all cursor-pointer">
                 Explore Products <span className="text-xl leading-none font-normal mt-[-2px]">&rsaquo;</span>
               </motion.a>
             </motion.div>
