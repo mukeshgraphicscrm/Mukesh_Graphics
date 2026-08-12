@@ -4,8 +4,8 @@ import { staggerContainer, fadeInUp, scaleUp } from '../utils/animations';
 
 const Gallery = () => {
   return (
-    <section id="gallery" className="py-24 bg-brand-light relative">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section id="gallery" className="py-24 bg-[#FFFDF9] relative">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-[95%]">
         <motion.div
           variants={staggerContainer}
           initial="hidden"

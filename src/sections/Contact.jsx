@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { CheckCircle2, Loader2, MapPin, Phone, Mail, Clock, ArrowRight } from 'lucide-react';
+import { CheckCircle2, Loader2, MapPin, Phone, Mail, Clock, ArrowRight, AlertCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -9,11 +10,25 @@ const Contact = () => {
     phone: '',
     requirements: ''
   });
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = 'Your name is required';
+    if (!formData.email.trim()) newErrors.email = 'Email address is required';
+    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
+    if (!formData.requirements.trim()) newErrors.requirements = 'Please tell us your requirements';
+    
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors({});
+    
     setLoading(true);
     try {
       const response = await fetch('/api/quote', {
@@ -32,8 +47,8 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-brand-light relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-24 bg-[#FFFDF9] relative">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-[95%]">
         <div className="rounded-[3rem] overflow-hidden grid lg:grid-cols-2 shadow-2xl">
           
           {/* Left Column (Dark) */}
@@ -114,11 +129,18 @@ const Contact = () => {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-widest mb-3">Full Name</label>
-                    <input required type="text" className="w-full px-6 py-3.5 rounded-full bg-[#FCF8F5] border border-[#F2EAE4] focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-colors text-sm" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="Your name" />
+                    <input type="text" className={`w-full px-6 py-3.5 rounded-full bg-[#FCF8F5] border ${errors.name ? 'border-[#FF4A4A] focus:ring-[#FF4A4A]' : 'border-[#F2EAE4] focus:border-brand-orange focus:ring-brand-orange'} focus:outline-none focus:ring-1 transition-colors text-sm`} value={formData.name} onChange={e => {setFormData({...formData, name: e.target.value}); setErrors({...errors, name: null})}} placeholder="Your name" />
+                    <AnimatePresence>
+                      {errors.name && (
+                        <motion.div initial={{ opacity: 0, height: 0, marginTop: 0 }} animate={{ opacity: 1, height: 'auto', marginTop: 8 }} exit={{ opacity: 0, height: 0, marginTop: 0 }} className="text-[#FF4A4A] text-[0.75rem] flex items-center gap-1.5 font-bold px-4 overflow-hidden">
+                          <AlertCircle size={14} /> {errors.name}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                   <div>
                     <label className="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-widest mb-3">Company</label>
@@ -128,19 +150,40 @@ const Contact = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-widest mb-3">Email</label>
-                    <input required type="email" className="w-full px-6 py-3.5 rounded-full bg-[#FCF8F5] border border-[#F2EAE4] focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-colors text-sm" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="you@brand.com" />
+                    <input type="email" className={`w-full px-6 py-3.5 rounded-full bg-[#FCF8F5] border ${errors.email ? 'border-[#FF4A4A] focus:ring-[#FF4A4A]' : 'border-[#F2EAE4] focus:border-brand-orange focus:ring-brand-orange'} focus:outline-none focus:ring-1 transition-colors text-sm`} value={formData.email} onChange={e => {setFormData({...formData, email: e.target.value}); setErrors({...errors, email: null})}} placeholder="you@brand.com" />
+                    <AnimatePresence>
+                      {errors.email && (
+                        <motion.div initial={{ opacity: 0, height: 0, marginTop: 0 }} animate={{ opacity: 1, height: 'auto', marginTop: 8 }} exit={{ opacity: 0, height: 0, marginTop: 0 }} className="text-[#FF4A4A] text-[0.75rem] flex items-center gap-1.5 font-bold px-4 overflow-hidden">
+                          <AlertCircle size={14} /> {errors.email}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                   <div>
                     <label className="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-widest mb-3">Phone</label>
-                    <input required type="tel" className="w-full px-6 py-3.5 rounded-full bg-[#FCF8F5] border border-[#F2EAE4] focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-colors text-sm" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} placeholder="+91 ..." />
+                    <input type="tel" className={`w-full px-6 py-3.5 rounded-full bg-[#FCF8F5] border ${errors.phone ? 'border-[#FF4A4A] focus:ring-[#FF4A4A]' : 'border-[#F2EAE4] focus:border-brand-orange focus:ring-brand-orange'} focus:outline-none focus:ring-1 transition-colors text-sm`} value={formData.phone} onChange={e => {setFormData({...formData, phone: e.target.value}); setErrors({...errors, phone: null})}} placeholder="+91 ..." />
+                    <AnimatePresence>
+                      {errors.phone && (
+                        <motion.div initial={{ opacity: 0, height: 0, marginTop: 0 }} animate={{ opacity: 1, height: 'auto', marginTop: 8 }} exit={{ opacity: 0, height: 0, marginTop: 0 }} className="text-[#FF4A4A] text-[0.75rem] flex items-center gap-1.5 font-bold px-4 overflow-hidden">
+                          <AlertCircle size={14} /> {errors.phone}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-widest mb-3">Product & Requirements</label>
-                  <textarea required rows="4" className="w-full px-6 py-4 rounded-[1.5rem] bg-[#FCF8F5] border border-[#F2EAE4] focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-colors text-sm resize-none" value={formData.requirements} onChange={e => setFormData({...formData, requirements: e.target.value})} placeholder="Box type, dimensions, quantity, finish..." />
+                  <textarea rows="4" className={`w-full px-6 py-4 rounded-[1.5rem] bg-[#FCF8F5] border ${errors.requirements ? 'border-[#FF4A4A] focus:ring-[#FF4A4A]' : 'border-[#F2EAE4] focus:border-brand-orange focus:ring-brand-orange'} focus:outline-none focus:ring-1 transition-colors text-sm resize-y min-h-[120px]`} value={formData.requirements} onChange={e => {setFormData({...formData, requirements: e.target.value}); setErrors({...errors, requirements: null})}} placeholder="Box type, dimensions, quantity, finish..." />
+                  <AnimatePresence>
+                    {errors.requirements && (
+                      <motion.div initial={{ opacity: 0, height: 0, marginTop: 0 }} animate={{ opacity: 1, height: 'auto', marginTop: 8 }} exit={{ opacity: 0, height: 0, marginTop: 0 }} className="text-[#FF4A4A] text-[0.75rem] flex items-center gap-1.5 font-bold px-4 overflow-hidden">
+                        <AlertCircle size={14} /> {errors.requirements}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
                 
-                <button type="submit" disabled={loading} className="w-full py-4 mt-2 bg-brand-orange hover:bg-[#eb6a2d] text-white font-bold rounded-full transition-colors shadow-lg shadow-brand-orange/20 flex justify-center items-center gap-2 text-[0.95rem]">
+                <button type="submit" disabled={loading} className="w-full py-4 sm:py-[1.15rem] mt-2 bg-gradient-to-r from-[#FF954B] to-[#FF6B2B] hover:from-[#FFA25B] hover:to-[#FF7B3B] text-white font-bold rounded-full transition-all duration-300 shadow-lg shadow-[#FF7B3B]/30 flex justify-center items-center gap-2 text-[1rem]">
                   {loading ? <Loader2 className="animate-spin" size={20} /> : (
                     <>Request my quote <ArrowRight size={18} strokeWidth={2.5}/></>
                   )}

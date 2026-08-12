@@ -21,34 +21,34 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-[#FFE4CF] via-[#FFF3EB] to-[#FFE4CF]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section className="py-24 bg-gradient-to-br from-[#FFEDD5] to-[#FED7AA]">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-[95%]">
         <div className="max-w-4xl mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand-orange/40 bg-brand-orange/10 mb-8">
-            <span className="w-2 h-2 rounded-full bg-brand-orange"></span>
-            <h2 className="text-[0.8rem] font-bold text-brand-orange uppercase tracking-[0.15em]">Client Voices</h2>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#FF7B3B]/30 bg-[#FF7B3B]/10 mb-8">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF7B3B]"></span>
+            <h2 className="text-[0.7rem] font-bold text-[#FF7B3B] uppercase tracking-[0.15em]">Client Voices</h2>
           </div>
-          <h3 className="text-3xl md:text-[4.5rem] font-serif font-bold leading-[1.1] text-[#4a3b32]">
-            Loved by brands that <span className="text-brand-orange">refuse <br className="hidden md:block" />to compromise.</span>
+          <h3 className="text-4xl md:text-[3.5rem] lg:text-[4.2rem] font-serif font-bold leading-[1.05] text-[#1F1916] tracking-tight">
+            Loved by brands that <span className="text-[#FF7B3B]">refuse <br className="hidden md:block" />to compromise.</span>
           </h3>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
           {testimonials.map((t, idx) => (
-            <div key={idx} className="bg-[#FDF5F0] p-8 md:p-9 rounded-[2rem] hover:-translate-y-2 transition-transform duration-300">
-              <div className="flex gap-[3px] text-brand-orange mb-5">
-                {[...Array(5)].map((_, i) => <Star key={i} size={17} fill="currentColor" strokeWidth={0} />)}
+            <div key={idx} className="bg-[#FFFDF9] p-7 md:p-8 rounded-[2rem] shadow-[0_4px_20px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgba(255,123,59,0.12)] hover:-translate-y-2 transition-all duration-300">
+              <div className="flex gap-[4px] text-[#FF7B3B] mb-4">
+                {[...Array(5)].map((_, i) => <Star key={i} size={18} fill="currentColor" strokeWidth={0} />)}
               </div>
-              <p className="text-[#201c19] font-serif text-[1.05rem] leading-[1.6] mb-10">
+              <p className="text-[#1F1916] font-serif text-[1.1rem] leading-[1.6] mb-6">
                 “{t.text}”
               </p>
               <div className="flex items-center gap-4">
-                <div className="w-[42px] h-[42px] rounded-full bg-brand-orange flex items-center justify-center text-white font-bold text-xs tracking-wide">
+                <div className="w-[46px] h-[46px] rounded-full bg-[#FF7B3B] flex items-center justify-center text-white font-bold text-sm tracking-wide shadow-sm">
                   {t.author.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div>
-                  <div className="font-bold text-[#201c19] text-[0.9rem] leading-tight">{t.author}</div>
-                  <div className="text-[0.75rem] text-gray-500 mt-[2px]">{t.company}</div>
+                  <div className="font-bold text-[#1F1916] text-[0.95rem] leading-tight">{t.author}</div>
+                  <div className="text-[0.8rem] text-gray-500 mt-[2px]">{t.company}</div>
                 </div>
               </div>
             </div>
