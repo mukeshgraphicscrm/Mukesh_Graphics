@@ -95,7 +95,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="text-[0.65rem] font-bold text-[#8f857d] uppercase tracking-widest mb-1">Factory & Head Office</div>
-                  <div className="font-bold text-white text-[1rem]">Industrial Area, Phase-2, New Delhi, India</div>
+                  <div className="font-bold text-white text-[1rem]">PLOT NO. 58, VISHWAKARMA ESTATE, Chitra Gujarat Industrial Development Corporation, Bhavnagar, Gujarat 364004</div>
                 </div>
               </div>
               <div className="flex items-center gap-5">
@@ -104,7 +104,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="text-[0.65rem] font-bold text-[#8f857d] uppercase tracking-widest mb-1">Call Us</div>
-                  <div className="font-bold text-white text-[1rem]">+91 98100 00000</div>
+                  <div className="font-bold text-white text-[1rem]">+91 9825982727 , +91 9512007008</div>
                 </div>
               </div>
               <div className="flex items-center gap-5">
@@ -113,7 +113,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="text-[0.65rem] font-bold text-[#8f857d] uppercase tracking-widest mb-1">Email</div>
-                  <div className="font-bold text-white text-[0.9rem] sm:text-[1rem] break-all sm:break-normal">sales@mukeshgraphics.com</div>
+                  <div className="font-bold text-white text-[0.9rem] sm:text-[1rem] break-all sm:break-normal">marketing.mukeshgraphics@gmail.com</div>
                 </div>
               </div>
               <div className="flex items-center gap-5">
@@ -122,7 +122,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="text-[0.65rem] font-bold text-[#8f857d] uppercase tracking-widest mb-1">Working Hours</div>
-                  <div className="font-bold text-white text-[0.9rem] sm:text-[1rem]">Mon - Sat · 9:30 AM - 7:00 PM</div>
+                  <div className="font-bold text-white text-[0.9rem] sm:text-[1rem]">Mon - Sat · 10:00 AM - 6:00 PM</div>
                 </div>
               </div>
             </div>
