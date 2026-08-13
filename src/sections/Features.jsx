@@ -7,8 +7,8 @@ const Features = () => {
   const features = [
     { icon: <Ruler size={24} />, title: "Custom Box Sizes", desc: "Any dimension, any specification — engineered to your product." },
     { icon: <Printer size={24} />, title: "Premium Printing", desc: "Offset, digital, flexo & UV printing at photographic quality." },
-    { icon: <ShieldCheck size={24} />, title: "Strong & Durable", desc: "Multi-ply corrugation and rigid boards built to survive transit." },
-    { icon: <Leaf size={24} />, title: "Eco-Friendly", desc: "Recyclable kraft, FSC-certified stocks and water-based inks." },
+    { icon: <ShieldCheck size={24} />, title: "Strong & Durable", desc: "High quality FBB paper 190 GSM to 400 GSM thickness." },
+    { icon: <Leaf size={24} />, title: "Eco-Friendly", desc: "Recyclable paper, FSC-certified stocks and water-based inks." },
     { icon: <Factory size={24} />, title: "Bulk Manufacturing", desc: "Modern facility with high-volume capacity for enterprise orders." },
     { icon: <Truck size={24} />, title: "Fast Delivery", desc: "Pan India dispatch with tight lead times you can plan around." },
     { icon: <IndianRupee size={24} />, title: "Affordable Pricing", desc: "Factory-direct rates without compromising on quality." },

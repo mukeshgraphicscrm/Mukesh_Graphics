@@ -4,7 +4,7 @@ import { Star } from 'lucide-react';
 const Testimonials = () => {
   const testimonials = [
     {
-      text: "Their rigid boxes turned our launch into a viral unboxing. Print quality, fit and finish — flawless every single run.",
+      text: "Their Mono Carton boxes turned our launch into a viral unboxing. Print quality, fit and finish — flawless every single run.",
       author: "Anjali Mehta",
       company: "Brand Lead, Lumen Beauty"
     },

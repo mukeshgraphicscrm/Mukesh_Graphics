@@ -32,8 +32,8 @@ const Footer = () => {
           <div className="md:col-span-1">
             <h4 className="font-bold text-[0.7rem] tracking-widest uppercase text-brand-orange mb-5">Solutions</h4>
             <ul className="space-y-[0.85rem] font-semibold text-[0.85rem] text-[#9e968f]">
-              <li><a href="#" className="hover:text-brand-orange transition-colors">Corrugated</a></li>
-              <li><a href="#" className="hover:text-brand-orange transition-colors">Rigid Boxes</a></li>
+              <li><a href="#" className="hover:text-brand-orange transition-colors">FBB Paper</a></li>
+              <li><a href="#" className="hover:text-brand-orange transition-colors">Mono Carton Boxes</a></li>
               <li><a href="#" className="hover:text-brand-orange transition-colors">Food Packaging</a></li>
               <li><a href="#" className="hover:text-brand-orange transition-colors">Cosmetic Boxes</a></li>
               <li><a href="#" className="hover:text-brand-orange transition-colors">Custom Die-Cut</a></li>

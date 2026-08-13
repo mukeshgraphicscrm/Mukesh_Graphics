@@ -1,7 +1,7 @@
 import React from 'react';
 
 const items = [
-  "Rigid Luxury Boxes",
+  "Mono Carton Luxury Boxes",
   "Cosmetic Packaging",
   "Food & Beverage",
   "Pharma Cartons",

@@ -5,17 +5,17 @@ import { staggerContainer, fadeInUp } from '../utils/animations';
 
 const Solutions = () => {
   const solutions = [
-    { span: "md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2", icon: <Box size={24} />, title: "Corrugated Boxes", desc: "3-ply, 5-ply & 7-ply strength-engineered cartons." },
+    { span: "md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2", icon: <Box size={24} />, title: "FBB Paper Boxes", desc: "3-ply, 5-ply & 7-ply strength-engineered cartons." },
     { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <Palette size={24} />, title: "Printed Packaging", desc: "Offset & digital, edge-to-edge color." },
     { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <Coffee size={24} />, title: "Food Packaging", desc: "Food-safe stocks & barrier coatings." },
     { span: "md:col-span-2 md:row-span-1 lg:col-span-2 lg:row-span-1", icon: <Sparkles size={24} />, title: "Cosmetic Boxes", desc: "Foil, deboss & silk lamination." },
     { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <Pill size={24} />, title: "Pharmaceutical", desc: "Compliant cartons with batch coding." },
     { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <Cpu size={24} />, title: "Electronics", desc: "Anti-static, EPE-fit inserts." },
     { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <Shirt size={24} />, title: "Garment Packaging", desc: "Retail-ready folding cartons." },
-    { span: "md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2", icon: <Gift size={24} />, title: "Gift Boxes", desc: "Rigid, magnetic-close & drawer boxes." },
+    { span: "md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2", icon: <Gift size={24} />, title: "Gift Boxes", desc: "Mono Carton, magnetic-close & drawer boxes." },
     { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <Package size={24} />, title: "Shipping Cartons", desc: "Bulk export-grade cartons." },
     { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <Globe2 size={24} />, title: "Export Packaging", desc: "ISPM-15 & humidity resistant." },
-    { span: "md:col-span-2 md:row-span-1 lg:col-span-2 lg:row-span-1", icon: <Gem size={24} />, title: "Luxury Rigid Boxes", desc: "Museum-grade unboxing experiences." },
+    { span: "md:col-span-2 md:row-span-1 lg:col-span-2 lg:row-span-1", icon: <Gem size={24} />, title: "Luxury Mono Carton Boxes", desc: "Museum-grade unboxing experiences." },
     { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <PenTool size={24} />, title: "Fully Custom", desc: "Design → die-line → production." },
   ];
 
