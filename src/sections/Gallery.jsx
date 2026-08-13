@@ -37,8 +37,8 @@ const Gallery = () => {
         >
           {/* Column 1 */}
           <div className="flex-1 flex flex-col">
-            <motion.div variants={scaleUp} className="rounded-[2rem] overflow-hidden shadow-xl h-full w-full aspect-[3/4] md:aspect-auto relative group cursor-pointer">
-              <img src="/images/gallery_left.png" alt="Box Stack" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
+            <motion.div variants={scaleUp} className="rounded-[2rem] overflow-hidden shadow-xl h-full w-full aspect-[2/3] relative group cursor-pointer bg-[#FBE8D6]">
+              <img src="/images/gallery_left.png" alt="Box Stack" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 ease-out" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute bottom-8 left-8 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
                 <span className="px-5 py-2.5 bg-[#2a2a2a]/90 backdrop-blur-sm text-white text-[0.7rem] font-bold uppercase tracking-[0.15em] rounded-full">
