@@ -136,7 +136,7 @@ const Contact = () => {
 
           {/* Right Column (Form) */}
           <div className="bg-white p-6 sm:p-10 md:p-16 md:pl-20">
-            <h3 className="text-[2rem] font-serif font-bold text-brand-dark mb-2">Send an enquiry</h3>
+            <h3 className="text-[2rem] font-serif font-bold text-brand-dark mb-2">Send an inquiry</h3>
             <p className="text-gray-500 mb-10 text-[0.95rem]">We'll respond within one business day.</p>
 
             {success ? (
