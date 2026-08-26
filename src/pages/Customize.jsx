@@ -518,7 +518,7 @@ Finishing: ${finishing}`;
                       type="number"
                       value={dimensions.length}
                       onChange={(e) => setDimensions({ ...dimensions, length: Number(e.target.value) })}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-[#1F1916] font-bold transition-all"
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-[#1F1916] font-bold transition-all cursor-pointer"
                     />
                   </div>
                   <div>
@@ -527,7 +527,7 @@ Finishing: ${finishing}`;
                       type="number"
                       value={dimensions.width}
                       onChange={(e) => setDimensions({ ...dimensions, width: Number(e.target.value) })}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-[#1F1916] font-bold transition-all"
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-[#1F1916] font-bold transition-all cursor-pointer"
                     />
                   </div>
                   <div>
@@ -536,7 +536,7 @@ Finishing: ${finishing}`;
                       type="number"
                       value={dimensions.height}
                       onChange={(e) => setDimensions({ ...dimensions, height: Number(e.target.value) })}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-[#1F1916] font-bold transition-all"
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-[#1F1916] font-bold transition-all cursor-pointer"
                     />
                   </div>
                 </div>
@@ -743,18 +743,18 @@ Finishing: ${finishing}`;
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
                         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Full Name</label>
-                        <input type="text" name="fullName" value={formData.fullName} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                        <input type="text" name="fullName" value={formData.fullName} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50 cursor-pointer" />
                       </div>
                       <div>
                         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Company</label>
-                        <input type="text" name="company" value={formData.company} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                        <input type="text" name="company" value={formData.company} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50 cursor-pointer" />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
                         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Phone</label>
-                        <input type="tel" name="phone" maxLength="10" value={formData.phone} onChange={handleFormChange} required className={`w-full px-4 py-3 rounded-xl border ${errors.phone ? 'border-[#FF4A4A] focus:ring-[#FF4A4A] bg-[#FF4A4A]/5' : 'border-gray-200 focus:border-[#FF7B3B] focus:ring-[#FF7B3B] bg-gray-50/50'} focus:ring-1 outline-none text-sm font-medium transition-all`} />
+                        <input type="tel" name="phone" maxLength="10" value={formData.phone} onChange={handleFormChange} required className={`w-full px-4 py-3 rounded-xl border ${errors.phone ? 'border-[#FF4A4A] focus:ring-[#FF4A4A] bg-[#FF4A4A]/5' : 'border-gray-200 focus:border-[#FF7B3B] focus:ring-[#FF7B3B] bg-gray-50/50'} focus:ring-1 outline-none text-sm font-medium transition-all cursor-pointer`} />
                         <AnimatePresence>
                           {errors.phone && (
                             <motion.div initial={{ opacity: 0, height: 0, marginTop: 0 }} animate={{ opacity: 1, height: 'auto', marginTop: 8 }} exit={{ opacity: 0, height: 0, marginTop: 0 }} className="text-[#FF4A4A] text-[10px] flex items-center gap-1.5 font-bold px-1 overflow-hidden">
@@ -765,7 +765,7 @@ Finishing: ${finishing}`;
                       </div>
                       <div>
                         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Email</label>
-                        <input type="email" name="email" value={formData.email} onChange={handleFormChange} required className={`w-full px-4 py-3 rounded-xl border ${errors.email ? 'border-[#FF4A4A] focus:ring-[#FF4A4A] bg-[#FF4A4A]/5' : 'border-gray-200 focus:border-[#FF7B3B] focus:ring-[#FF7B3B] bg-gray-50/50'} focus:ring-1 outline-none text-sm font-medium transition-all`} />
+                        <input type="email" name="email" value={formData.email} onChange={handleFormChange} required className={`w-full px-4 py-3 rounded-xl border ${errors.email ? 'border-[#FF4A4A] focus:ring-[#FF4A4A] bg-[#FF4A4A]/5' : 'border-gray-200 focus:border-[#FF7B3B] focus:ring-[#FF7B3B] bg-gray-50/50'} focus:ring-1 outline-none text-sm font-medium transition-all cursor-pointer`} />
                         <AnimatePresence>
                           {errors.email && (
                             <motion.div initial={{ opacity: 0, height: 0, marginTop: 0 }} animate={{ opacity: 1, height: 'auto', marginTop: 8 }} exit={{ opacity: 0, height: 0, marginTop: 0 }} className="text-[#FF4A4A] text-[10px] flex items-center gap-1.5 font-bold px-1 overflow-hidden">
@@ -779,11 +779,11 @@ Finishing: ${finishing}`;
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
                         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Quantity</label>
-                        <input type="number" name="quantity" value={formData.quantity} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-bold transition-all bg-gray-50/50" />
+                        <input type="number" name="quantity" value={formData.quantity} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-bold transition-all bg-gray-50/50 cursor-pointer" />
                       </div>
                       <div>
                         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Delivery Location</label>
-                        <input type="text" name="deliveryLocation" value={formData.deliveryLocation} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                        <input type="text" name="deliveryLocation" value={formData.deliveryLocation} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50 cursor-pointer" />
                       </div>
                     </div>
 
@@ -795,7 +795,7 @@ Finishing: ${finishing}`;
                         onChange={handleFormChange}
                         placeholder="Anything else we should know — special inks, certifications, deadlines."
                         rows={3}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all resize-none bg-gray-50/50"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all resize-none bg-gray-50/50 cursor-pointer"
                       />
                     </div>
 
