@@ -1,12 +1,25 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import * as THREE from 'three';
 import { motion } from 'framer-motion';
-import { UploadCloud, CheckCircle2, Pause, Play } from 'lucide-react';
+import { UploadCloud, CheckCircle2, Pause, Play, ChevronDown } from 'lucide-react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Environment, ContactShadows, RoundedBox } from '@react-three/drei';
+import { OrbitControls, Environment, ContactShadows, RoundedBox, Bounds } from '@react-three/drei';
 
 // --- 3D Box Component ---
-function BoxPreview({ dimensions, isRotating }) {
+function BoxPreview({ dimensions, isRotating, artworkUrl }) {
   const boxRef = useRef();
+  const [texture, setTexture] = useState(null);
+
+  useEffect(() => {
+    if (artworkUrl) {
+      new THREE.TextureLoader().load(artworkUrl, (t) => {
+        t.colorSpace = THREE.SRGBColorSpace;
+        setTexture(t);
+      });
+    } else {
+      setTexture(null);
+    }
+  }, [artworkUrl]);
 
   useFrame((state, delta) => {
     if (isRotating && boxRef.current) {
@@ -27,11 +40,11 @@ function BoxPreview({ dimensions, isRotating }) {
         args={[w, h, d]}
         radius={0.05}
         smoothness={4}
-        position={[0, h / 2 - 0.5, 0]}
+        position={[0, 0, 0]}
       >
-        <meshStandardMaterial color="#FFFFFF" roughness={0.2} metalness={0.1} />
+        <meshStandardMaterial color="#FFFFFF" roughness={0.2} metalness={0.1} map={texture} />
       </RoundedBox>
-      <ContactShadows position={[0, -0.6, 0]} opacity={0.4} scale={10} blur={2} far={4} />
+      <ContactShadows position={[0, -h / 2 - 0.01, 0]} opacity={0.4} scale={10} blur={2} far={4} />
       <Environment preset="city" />
     </group>
   );
@@ -107,6 +120,16 @@ const Customize = () => {
 
   // State for 3D interactions
   const [isRotating, setIsRotating] = useState(true);
+  const [isStructureOpen, setIsStructureOpen] = useState(false);
+  const [artworkUrl, setArtworkUrl] = useState(null);
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setArtworkUrl(url);
+    }
+  };
 
   const handleTypeChange = (type) => {
     setPackagingType(type);
@@ -219,18 +242,30 @@ const Customize = () => {
                 </div>
 
                 <div className="relative">
-                  <select
-                    value={boxStructure}
-                    onChange={(e) => setBoxStructure(e.target.value)}
-                    className="w-full appearance-none px-5 py-4 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-[#1F1916] font-bold bg-white transition-all cursor-pointer"
+                  <button
+                    onClick={() => setIsStructureOpen(!isStructureOpen)}
+                    className={`w-full flex items-center justify-between px-5 py-4 rounded-xl border outline-none text-[#1F1916] font-bold bg-white transition-all cursor-pointer ${isStructureOpen ? 'border-[#FF7B3B] ring-1 ring-[#FF7B3B]' : 'border-gray-200 hover:border-[#FF7B3B]'}`}
                   >
-                    {boxStructures.map(structure => (
-                      <option key={structure} value={structure}>{structure}</option>
-                    ))}
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-gray-500">
-                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
-                  </div>
+                    <span>{boxStructure}</span>
+                    <ChevronDown size={20} className={`text-gray-500 transition-transform ${isStructureOpen ? 'rotate-180 text-[#FF7B3B]' : ''}`} />
+                  </button>
+                  
+                  {isStructureOpen && (
+                    <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-100 rounded-xl shadow-[0_10px_25px_rgba(0,0,0,0.05)] overflow-hidden z-30 flex flex-col">
+                      {boxStructures.map(structure => (
+                        <button
+                          key={structure}
+                          onClick={() => {
+                            setBoxStructure(structure);
+                            setIsStructureOpen(false);
+                          }}
+                          className={`px-5 py-4 text-left font-bold text-[15px] transition-colors ${boxStructure === structure ? 'bg-[#FF7B3B]/10 text-[#FF7B3B]' : 'text-gray-700 hover:bg-gray-50 hover:text-[#1F1916]'}`}
+                        >
+                          {structure}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </motion.div>
 
@@ -389,13 +424,20 @@ const Customize = () => {
                   <h2 className="text-xl font-bold text-[#1F1916]">Upload artwork</h2>
                 </div>
 
-                <div className="border-2 border-dashed border-[#FF7B3B]/30 hover:border-[#FF7B3B] bg-white rounded-[1.5rem] p-10 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-orange-50/30 transition-all group">
-                  <div className="bg-orange-100 p-3 rounded-full text-[#FF7B3B] mb-4 group-hover:scale-110 group-hover:rotate-3 transition-transform">
-                    <UploadCloud size={24} />
-                  </div>
-                  <div className="font-bold text-[#1F1916] mb-1">Drag & drop or browse</div>
-                  <div className="text-xs text-gray-500">PDF, AI, PSD, PNG, JPEG up to 20MB</div>
-                </div>
+                <label className="border-2 border-dashed border-[#FF7B3B]/30 hover:border-[#FF7B3B] bg-white rounded-[1.5rem] p-10 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-orange-50/30 transition-all group overflow-hidden relative">
+                  <input type="file" accept="image/*" className="hidden" onChange={handleFileUpload} />
+                  {artworkUrl ? (
+                    <img src={artworkUrl} alt="Artwork" className="h-24 w-auto object-contain rounded-lg shadow-sm" />
+                  ) : (
+                    <>
+                      <div className="bg-orange-100 p-3 rounded-full text-[#FF7B3B] mb-4 group-hover:scale-110 group-hover:rotate-3 transition-transform">
+                        <UploadCloud size={24} />
+                      </div>
+                      <div className="font-bold text-[#1F1916] mb-1">Drag & drop or browse</div>
+                      <div className="text-xs text-gray-500">PNG, JPEG up to 20MB</div>
+                    </>
+                  )}
+                </label>
               </motion.div>
 
             </div>
@@ -412,8 +454,10 @@ const Customize = () => {
                   <Canvas camera={{ position: [0, 2, 5], fov: 45 }}>
                     <ambientLight intensity={0.5} />
                     <directionalLight position={[10, 10, 5]} intensity={1} />
-                    <BoxPreview dimensions={dimensions} isRotating={isRotating} />
-                    <OrbitControls enableZoom={true} enablePan={false} />
+                    <Bounds fit clip observe margin={1.2}>
+                      <BoxPreview dimensions={dimensions} isRotating={isRotating} artworkUrl={artworkUrl} />
+                    </Bounds>
+                    <OrbitControls makeDefault enableZoom={true} enablePan={false} />
                   </Canvas>
 
                   {/* Overlays */}
