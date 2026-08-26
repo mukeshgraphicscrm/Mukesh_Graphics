@@ -136,6 +136,27 @@ const Customize = () => {
     }
   };
 
+  const handleDownloadSpec = () => {
+    const specData = `Packaging Specification - Mukesh Graphics
+-----------------------------------------
+Packaging Type: ${packagingType}
+Box Structure: ${boxStructure}
+Dimensions: ${dimensions.length}x${dimensions.width}x${dimensions.height} ${dimensions.unit}
+Material: ${material}
+Printing: ${printing}
+Finishing: ${finishing}`;
+
+    const blob = new Blob([specData], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Mukesh_Graphics_Spec_${packagingType.replace(/\s+/g, '_')}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   const handleTypeChange = (type) => {
     setPackagingType(type);
     setDimensions(packagingSpecs[type].dimensions);
@@ -549,7 +570,7 @@ const Customize = () => {
                       <button type="submit" className="flex-1 bg-gradient-to-r from-[#FF954B] to-[#FF6B2B] hover:from-[#FFA25B] hover:to-[#FF7B3B] text-white py-4 px-6 rounded-full font-bold transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2">
                         Send for instant estimate &rarr;
                       </button>
-                      <button type="button" className="sm:w-auto w-full bg-white text-[#1F1916] border border-gray-200 py-4 px-8 rounded-full font-bold hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm">
+                      <button type="button" onClick={handleDownloadSpec} className="sm:w-auto w-full bg-white text-[#1F1916] border border-gray-200 py-4 px-8 rounded-full font-bold hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm">
                         Download spec
                       </button>
                     </div>
