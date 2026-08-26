@@ -27,7 +27,7 @@ const finishingProperties = {
 // --- Texture Component ---
 function BoxTextureMaterial({ artworkUrl, baseColor, finishProps }) {
   const texture = useLoader(THREE.TextureLoader, artworkUrl);
-
+  
   useEffect(() => {
     if (texture) {
       texture.colorSpace = THREE.SRGBColorSpace;
@@ -59,12 +59,12 @@ function BoxPreview({ dimensions, isRotating, artworkUrl, boxStructure, material
 
   const matProps = materialProperties[material] || materialProperties['SBS Board'];
   const baseFinProps = finishingProperties[finishing] || finishingProperties['Matt Lamination'];
-
+  
   // Combine material roughness with finishing properties
   const finishProps = {
     ...baseFinProps,
     // If it's a rough material like kraft paper, it resists becoming perfectly glossy
-    roughness: Math.max(baseFinProps.roughness, matProps.roughness * 0.3)
+    roughness: Math.max(baseFinProps.roughness, matProps.roughness * 0.3) 
   };
 
   // Render a single panel (plane)
@@ -739,79 +739,79 @@ Finishing: ${finishing}`;
                       </button>
                     </div>
                   ) : (
-                    <form className="space-y-5" onSubmit={handleSubmit} noValidate>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                          <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Full Name</label>
-                          <input type="text" name="fullName" value={formData.fullName} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
-                        </div>
-                        <div>
-                          <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Company</label>
-                          <input type="text" name="company" value={formData.company} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                          <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Phone</label>
-                          <input type="tel" name="phone" maxLength="10" value={formData.phone} onChange={handleFormChange} required className={`w-full px-4 py-3 rounded-xl border ${errors.phone ? 'border-[#FF4A4A] focus:ring-[#FF4A4A] bg-[#FF4A4A]/5' : 'border-gray-200 focus:border-[#FF7B3B] focus:ring-[#FF7B3B] bg-gray-50/50'} focus:ring-1 outline-none text-sm font-medium transition-all`} />
-                          <AnimatePresence>
-                            {errors.phone && (
-                              <motion.div initial={{ opacity: 0, height: 0, marginTop: 0 }} animate={{ opacity: 1, height: 'auto', marginTop: 8 }} exit={{ opacity: 0, height: 0, marginTop: 0 }} className="text-[#FF4A4A] text-[10px] flex items-center gap-1.5 font-bold px-1 overflow-hidden">
-                                <AlertCircle size={12} /> {errors.phone}
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-                        <div>
-                          <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Email</label>
-                          <input type="email" name="email" value={formData.email} onChange={handleFormChange} required className={`w-full px-4 py-3 rounded-xl border ${errors.email ? 'border-[#FF4A4A] focus:ring-[#FF4A4A] bg-[#FF4A4A]/5' : 'border-gray-200 focus:border-[#FF7B3B] focus:ring-[#FF7B3B] bg-gray-50/50'} focus:ring-1 outline-none text-sm font-medium transition-all`} />
-                          <AnimatePresence>
-                            {errors.email && (
-                              <motion.div initial={{ opacity: 0, height: 0, marginTop: 0 }} animate={{ opacity: 1, height: 'auto', marginTop: 8 }} exit={{ opacity: 0, height: 0, marginTop: 0 }} className="text-[#FF4A4A] text-[10px] flex items-center gap-1.5 font-bold px-1 overflow-hidden">
-                                <AlertCircle size={12} /> {errors.email}
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                          <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Quantity</label>
-                          <input type="number" name="quantity" value={formData.quantity} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-bold transition-all bg-gray-50/50" />
-                        </div>
-                        <div>
-                          <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Delivery Location</label>
-                          <input type="text" name="deliveryLocation" value={formData.deliveryLocation} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
-                        </div>
-                      </div>
-
+                  <form className="space-y-5" onSubmit={handleSubmit} noValidate>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
-                        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Notes</label>
-                        <textarea
-                          name="notes"
-                          value={formData.notes}
-                          onChange={handleFormChange}
-                          placeholder="Anything else we should know — special inks, certifications, deadlines."
-                          rows={3}
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all resize-none bg-gray-50/50"
-                        />
+                        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Full Name</label>
+                        <input type="text" name="fullName" value={formData.fullName} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
                       </div>
-
-                      <div className="pt-4 flex flex-col sm:flex-row gap-3">
-                        <button type="submit" disabled={isSubmitting} className="flex-1 bg-gradient-to-r from-[#FF954B] to-[#FF6B2B] hover:from-[#FFA25B] hover:to-[#FF7B3B] text-white py-4 px-6 rounded-full font-bold transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 disabled:opacity-70">
-                          {isSubmitting ? 'Sending...' : 'Send for instant estimate →'}
-                        </button>
-                        <button type="button" onClick={handleDownloadSpec} className="sm:w-auto w-full bg-white text-[#1F1916] border border-gray-200 py-4 px-8 rounded-full font-bold hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm">
-                          Download spec
-                        </button>
+                      <div>
+                        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Company</label>
+                        <input type="text" name="company" value={formData.company} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
                       </div>
+                    </div>
 
-                      <p className="text-[10px] text-gray-400 mt-4 leading-relaxed">
-                        By submitting you agree to be contacted about your packaging request. We never share your details. Prefer to email us instead?
-                      </p>
-                    </form>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <div>
+                        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Phone</label>
+                        <input type="tel" name="phone" maxLength="10" value={formData.phone} onChange={handleFormChange} required className={`w-full px-4 py-3 rounded-xl border ${errors.phone ? 'border-[#FF4A4A] focus:ring-[#FF4A4A] bg-[#FF4A4A]/5' : 'border-gray-200 focus:border-[#FF7B3B] focus:ring-[#FF7B3B] bg-gray-50/50'} focus:ring-1 outline-none text-sm font-medium transition-all`} />
+                        <AnimatePresence>
+                          {errors.phone && (
+                            <motion.div initial={{ opacity: 0, height: 0, marginTop: 0 }} animate={{ opacity: 1, height: 'auto', marginTop: 8 }} exit={{ opacity: 0, height: 0, marginTop: 0 }} className="text-[#FF4A4A] text-[10px] flex items-center gap-1.5 font-bold px-1 overflow-hidden">
+                              <AlertCircle size={12} /> {errors.phone}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Email</label>
+                        <input type="email" name="email" value={formData.email} onChange={handleFormChange} required className={`w-full px-4 py-3 rounded-xl border ${errors.email ? 'border-[#FF4A4A] focus:ring-[#FF4A4A] bg-[#FF4A4A]/5' : 'border-gray-200 focus:border-[#FF7B3B] focus:ring-[#FF7B3B] bg-gray-50/50'} focus:ring-1 outline-none text-sm font-medium transition-all`} />
+                        <AnimatePresence>
+                          {errors.email && (
+                            <motion.div initial={{ opacity: 0, height: 0, marginTop: 0 }} animate={{ opacity: 1, height: 'auto', marginTop: 8 }} exit={{ opacity: 0, height: 0, marginTop: 0 }} className="text-[#FF4A4A] text-[10px] flex items-center gap-1.5 font-bold px-1 overflow-hidden">
+                              <AlertCircle size={12} /> {errors.email}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <div>
+                        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Quantity</label>
+                        <input type="number" name="quantity" value={formData.quantity} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-bold transition-all bg-gray-50/50" />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Delivery Location</label>
+                        <input type="text" name="deliveryLocation" value={formData.deliveryLocation} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Notes</label>
+                      <textarea
+                        name="notes"
+                        value={formData.notes}
+                        onChange={handleFormChange}
+                        placeholder="Anything else we should know — special inks, certifications, deadlines."
+                        rows={3}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all resize-none bg-gray-50/50"
+                      />
+                    </div>
+
+                    <div className="pt-4 flex flex-col sm:flex-row gap-3">
+                      <button type="submit" disabled={isSubmitting} className="flex-1 bg-gradient-to-r from-[#FF954B] to-[#FF6B2B] hover:from-[#FFA25B] hover:to-[#FF7B3B] text-white py-4 px-6 rounded-full font-bold transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 disabled:opacity-70">
+                        {isSubmitting ? 'Sending...' : 'Send for instant estimate →'}
+                      </button>
+                      <button type="button" onClick={handleDownloadSpec} className="sm:w-auto w-full bg-white text-[#1F1916] border border-gray-200 py-4 px-8 rounded-full font-bold hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm">
+                        Download spec
+                      </button>
+                    </div>
+
+                    <p className="text-[10px] text-gray-400 mt-4 leading-relaxed">
+                      By submitting you agree to be contacted about your packaging request. We never share your details. Prefer to email us instead?
+                    </p>
+                  </form>
                   )}
                 </motion.div>
 
