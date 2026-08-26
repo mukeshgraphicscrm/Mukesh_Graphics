@@ -2,24 +2,26 @@ import React, { useState, useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
 import { UploadCloud, CheckCircle2, Pause, Play, ChevronDown } from 'lucide-react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows, RoundedBox, Bounds } from '@react-three/drei';
+
+// --- Texture Component ---
+function BoxTextureMaterial({ artworkUrl }) {
+  const texture = useLoader(THREE.TextureLoader, artworkUrl);
+  
+  useEffect(() => {
+    if (texture) {
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.needsUpdate = true;
+    }
+  }, [texture]);
+
+  return <meshStandardMaterial color="#FFFFFF" roughness={0.2} metalness={0.1} map={texture} />;
+}
 
 // --- 3D Box Component ---
 function BoxPreview({ dimensions, isRotating, artworkUrl }) {
   const boxRef = useRef();
-  const [texture, setTexture] = useState(null);
-
-  useEffect(() => {
-    if (artworkUrl) {
-      new THREE.TextureLoader().load(artworkUrl, (t) => {
-        t.colorSpace = THREE.SRGBColorSpace;
-        setTexture(t);
-      });
-    } else {
-      setTexture(null);
-    }
-  }, [artworkUrl]);
 
   useFrame((state, delta) => {
     if (isRotating && boxRef.current) {
@@ -35,15 +37,16 @@ function BoxPreview({ dimensions, isRotating, artworkUrl }) {
 
   return (
     <group>
-      <RoundedBox
-        ref={boxRef}
-        args={[w, h, d]}
-        radius={0.05}
-        smoothness={4}
-        position={[0, 0, 0]}
-      >
-        <meshStandardMaterial color="#FFFFFF" roughness={0.2} metalness={0.1} map={texture} />
-      </RoundedBox>
+      <mesh ref={boxRef} position={[0, 0, 0]}>
+        <boxGeometry args={[w, h, d]} />
+        {artworkUrl ? (
+          <React.Suspense fallback={<meshStandardMaterial color="#FFFFFF" roughness={0.2} metalness={0.1} />}>
+            <BoxTextureMaterial artworkUrl={artworkUrl} />
+          </React.Suspense>
+        ) : (
+          <meshStandardMaterial color="#FFFFFF" roughness={0.2} metalness={0.1} />
+        )}
+      </mesh>
       <ContactShadows position={[0, -h / 2 - 0.01, 0]} opacity={0.4} scale={10} blur={2} far={4} />
       <Environment preset="city" />
     </group>
@@ -448,7 +451,7 @@ const Customize = () => {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="bg-gradient-to-br from-[#4A0B0B] to-[#1A0303] rounded-[2.5rem] w-full aspect-[4/3] md:aspect-[16/10] relative overflow-hidden shadow-[0_20px_40px_rgba(74,11,11,0.2)] flex-shrink-0"
+                  className="bg-gradient-to-br from-[#4A0B0B] to-[#1A0303] rounded-[2.5rem] w-full aspect-[4/3] relative overflow-hidden shadow-[0_20px_40px_rgba(74,11,11,0.2)] flex-shrink-0"
                 >
                   {/* 3D Canvas */}
                   <Canvas camera={{ position: [0, 2, 5], fov: 45 }}>
