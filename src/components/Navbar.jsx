@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Package } from 'lucide-react';
 import { smoothScroll } from '../utils/smoothScroll';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,8 +19,22 @@ const Navbar = () => {
   }, []);
 
   const handleNavClick = (e, href) => {
-    smoothScroll(e, href);
+    e.preventDefault();
     setIsMobileMenuOpen(false);
+
+    if (href.startsWith('#')) {
+      if (location.pathname !== '/') {
+        navigate('/');
+        setTimeout(() => {
+          smoothScroll(e, href);
+        }, 100);
+      } else {
+        smoothScroll(e, href);
+      }
+    } else {
+      navigate(href);
+      window.scrollTo(0, 0);
+    }
   };
 
   const navLinks = [
@@ -26,10 +43,11 @@ const Navbar = () => {
     { name: 'Process', href: '#process' },
     { name: 'Gallery', href: '#gallery' },
     { name: 'Contact', href: '#contact' },
+    { name: 'Careers', href: '/careers' },
   ];
 
   return (
-    <motion.nav 
+    <motion.nav
       initial={{ y: -100, opacity: 0, x: "-50%" }}
       animate={{ y: 0, opacity: 1, x: "-50%" }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -60,7 +78,7 @@ const Navbar = () => {
         </div>
 
         {/* CTA */}
-        <motion.div 
+        <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="hidden md:flex items-center"
@@ -106,7 +124,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -15, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
@@ -126,12 +144,12 @@ const Navbar = () => {
                 {link.name}
               </motion.a>
             ))}
-            <motion.a 
+            <motion.a
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.35, ease: "easeOut" }}
-              href="#contact" 
-              onClick={(e) => handleNavClick(e, '#contact')} 
+              href="#contact"
+              onClick={(e) => handleNavClick(e, '#contact')}
               className="bg-[#1F1916] text-white px-6 py-4 rounded-full text-center font-bold mt-2 cursor-pointer shadow-lg active:scale-95 transition-transform"
             >
               Get a Quote &rarr;
