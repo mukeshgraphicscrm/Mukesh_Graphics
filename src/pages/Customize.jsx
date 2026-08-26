@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as THREE from 'three';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { db } from '../firebase/config';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { UploadCloud, CheckCircle2, Pause, Play, ChevronDown } from 'lucide-react';
+import { UploadCloud, CheckCircle2, Pause, Play, ChevronDown, AlertCircle } from 'lucide-react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows, RoundedBox, Bounds } from '@react-three/drei';
 
@@ -261,6 +261,7 @@ const Customize = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     let timer;
@@ -273,7 +274,14 @@ const Customize = () => {
   }, [success]);
 
   const handleFormChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === 'phone') {
+      const val = value.replace(/\D/g, '').slice(0, 10);
+      setFormData({ ...formData, phone: val });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+    setErrors({ ...errors, [name]: null });
   };
 
   const handleFileUpload = (e) => {
@@ -307,6 +315,27 @@ Finishing: ${finishing}`;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const newErrors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    } else if (formData.phone.length !== 10) {
+      newErrors.phone = 'Must be exactly 10 digits';
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email address is required';
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       await addDoc(collection(db, 'custom_package'), {
@@ -710,7 +739,7 @@ Finishing: ${finishing}`;
                       </button>
                     </div>
                   ) : (
-                  <form className="space-y-5" onSubmit={handleSubmit}>
+                  <form className="space-y-5" onSubmit={handleSubmit} noValidate>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
                         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Full Name</label>
@@ -725,11 +754,25 @@ Finishing: ${finishing}`;
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
                         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Phone</label>
-                        <input type="tel" name="phone" value={formData.phone} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                        <input type="tel" name="phone" maxLength="10" value={formData.phone} onChange={handleFormChange} required className={`w-full px-4 py-3 rounded-xl border ${errors.phone ? 'border-[#FF4A4A] focus:ring-[#FF4A4A] bg-[#FF4A4A]/5' : 'border-gray-200 focus:border-[#FF7B3B] focus:ring-[#FF7B3B] bg-gray-50/50'} focus:ring-1 outline-none text-sm font-medium transition-all`} />
+                        <AnimatePresence>
+                          {errors.phone && (
+                            <motion.div initial={{ opacity: 0, height: 0, marginTop: 0 }} animate={{ opacity: 1, height: 'auto', marginTop: 8 }} exit={{ opacity: 0, height: 0, marginTop: 0 }} className="text-[#FF4A4A] text-[10px] flex items-center gap-1.5 font-bold px-1 overflow-hidden">
+                              <AlertCircle size={12} /> {errors.phone}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
                       <div>
                         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Email</label>
-                        <input type="email" name="email" value={formData.email} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                        <input type="email" name="email" value={formData.email} onChange={handleFormChange} required className={`w-full px-4 py-3 rounded-xl border ${errors.email ? 'border-[#FF4A4A] focus:ring-[#FF4A4A] bg-[#FF4A4A]/5' : 'border-gray-200 focus:border-[#FF7B3B] focus:ring-[#FF7B3B] bg-gray-50/50'} focus:ring-1 outline-none text-sm font-medium transition-all`} />
+                        <AnimatePresence>
+                          {errors.email && (
+                            <motion.div initial={{ opacity: 0, height: 0, marginTop: 0 }} animate={{ opacity: 1, height: 'auto', marginTop: 8 }} exit={{ opacity: 0, height: 0, marginTop: 0 }} className="text-[#FF4A4A] text-[10px] flex items-center gap-1.5 font-bold px-1 overflow-hidden">
+                              <AlertCircle size={12} /> {errors.email}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
                     </div>
 
