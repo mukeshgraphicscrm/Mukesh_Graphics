@@ -72,8 +72,8 @@ const Customize = () => {
   const finishings = ['Matt Lamination', 'Gloss Lamination', 'Spot UV', 'Gold Foiling', 'Soft Touch'];
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-r from-[#FFD1A6] via-[#FFFDF9] to-[#FFCE9E] pt-28 pb-20 overflow-hidden">
-      
+    <div className="relative min-h-screen bg-gradient-to-r from-[#FFD1A6] via-[#FFFDF9] to-[#FFCE9E] pt-28 pb-20">
+
       {/* Background Grid */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
@@ -103,7 +103,7 @@ const Customize = () => {
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8 items-start">
+        <div className="flex flex-col lg:flex-row gap-8 items-stretch">
 
           {/* Left Column - Form Steps */}
           <div className="w-full lg:w-[45%] flex flex-col gap-6">
@@ -125,8 +125,8 @@ const Customize = () => {
                     key={type}
                     onClick={() => setPackagingType(type)}
                     className={`px-5 py-3 rounded-full text-sm font-bold border text-center transition-all ${packagingType === type
-                        ? 'bg-[#FF7B3B] text-white border-[#FF7B3B] shadow-md'
-                        : 'bg-white text-gray-700 border-gray-200 hover:border-[#FF7B3B] hover:text-[#FF7B3B]'
+                      ? 'bg-[#FF7B3B] text-white border-[#FF7B3B] shadow-md'
+                      : 'bg-white text-gray-700 border-gray-200 hover:border-[#FF7B3B] hover:text-[#FF7B3B]'
                       }`}
                   >
                     {type}
@@ -211,8 +211,8 @@ const Customize = () => {
                     key={unit}
                     onClick={() => setDimensions({ ...dimensions, unit })}
                     className={`px-5 py-1.5 rounded-full text-xs font-bold transition-all ${dimensions.unit === unit
-                        ? 'bg-[#FF7B3B] text-white shadow-md'
-                        : 'text-gray-500 hover:text-[#FF7B3B]'
+                      ? 'bg-[#FF7B3B] text-white shadow-md'
+                      : 'text-gray-500 hover:text-[#FF7B3B]'
                       }`}
                   >
                     {unit}
@@ -239,8 +239,8 @@ const Customize = () => {
                     key={mat.name}
                     onClick={() => setMaterial(mat.name)}
                     className={`text-left p-4 rounded-xl border transition-all ${material === mat.name
-                        ? 'border-[#FF7B3B] bg-orange-50/30 shadow-sm ring-1 ring-[#FF7B3B]'
-                        : 'border-gray-200 hover:border-[#FF7B3B] hover:bg-gray-50/50'
+                      ? 'border-[#FF7B3B] bg-orange-50/30 shadow-sm ring-1 ring-[#FF7B3B]'
+                      : 'border-gray-200 hover:border-[#FF7B3B] hover:bg-gray-50/50'
                       }`}
                   >
                     <div className="font-bold text-[#1F1916] text-[15px]">{mat.name}</div>
@@ -268,8 +268,8 @@ const Customize = () => {
                     key={print}
                     onClick={() => setPrinting(print)}
                     className={`px-5 py-2.5 rounded-full text-sm font-bold border transition-all ${printing === print
-                        ? 'bg-[#FF7B3B] text-white border-[#FF7B3B] shadow-md'
-                        : 'bg-white text-gray-700 border-gray-200 hover:border-[#FF7B3B] hover:text-[#FF7B3B]'
+                      ? 'bg-[#FF7B3B] text-white border-[#FF7B3B] shadow-md'
+                      : 'bg-white text-gray-700 border-gray-200 hover:border-[#FF7B3B] hover:text-[#FF7B3B]'
                       }`}
                   >
                     {print}
@@ -296,8 +296,8 @@ const Customize = () => {
                     key={fin}
                     onClick={() => setFinishing(fin)}
                     className={`px-5 py-3 rounded-full text-sm font-bold border text-center transition-all ${finishing === fin
-                        ? 'bg-[#FF7B3B] text-white border-[#FF7B3B] shadow-md'
-                        : 'bg-white text-gray-700 border-gray-200 hover:border-[#FF7B3B] hover:text-[#FF7B3B]'
+                      ? 'bg-[#FF7B3B] text-white border-[#FF7B3B] shadow-md'
+                      : 'bg-white text-gray-700 border-gray-200 hover:border-[#FF7B3B] hover:text-[#FF7B3B]'
                       }`}
                   >
                     {fin}
@@ -333,49 +333,52 @@ const Customize = () => {
           </div>
 
           {/* Right Column - 3D Preview & Form */}
-          <div className="w-full lg:w-[55%] flex flex-col gap-6">
+          <div className="w-full lg:w-[55%] flex flex-col gap-6 h-full pb-8">
 
-            {/* Sticky 3D Preview Container */}
-            <div className="lg:sticky lg:top-28 flex flex-col gap-6">
+            {/* Sticky 3D Preview Container wrapper */}
+            <div className="flex-1 relative">
+              <div className="lg:sticky lg:top-28 flex flex-col gap-6 z-20">
 
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-gradient-to-br from-[#4A0B0B] to-[#1A0303] rounded-[2.5rem] w-full aspect-[4/3] md:aspect-[16/10] relative overflow-hidden shadow-[0_20px_40px_rgba(74,11,11,0.2)]"
-              >
-                {/* 3D Canvas */}
-                <Canvas camera={{ position: [0, 2, 5], fov: 45 }}>
-                  <ambientLight intensity={0.5} />
-                  <directionalLight position={[10, 10, 5]} intensity={1} />
-                  <BoxPreview dimensions={dimensions} isRotating={isRotating} />
-                  <OrbitControls enableZoom={true} enablePan={false} />
-                </Canvas>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-gradient-to-br from-[#4A0B0B] to-[#1A0303] rounded-[2.5rem] w-full aspect-[4/3] md:aspect-[16/10] relative overflow-hidden shadow-[0_20px_40px_rgba(74,11,11,0.2)] flex-shrink-0"
+            >
+              {/* 3D Canvas */}
+              <Canvas camera={{ position: [0, 2, 5], fov: 45 }}>
+                <ambientLight intensity={0.5} />
+                <directionalLight position={[10, 10, 5]} intensity={1} />
+                <BoxPreview dimensions={dimensions} isRotating={isRotating} />
+                <OrbitControls enableZoom={true} enablePan={false} />
+              </Canvas>
 
-                {/* Overlays */}
-                <div className="absolute top-6 left-6 flex items-center gap-2">
-                  <div className="bg-white/90 backdrop-blur-sm text-[#1F1916] text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wider flex items-center gap-2 shadow-sm">
-                    <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                    LIVE PREVIEW
-                  </div>
-                  <div className="bg-[#BFA15F] text-[#1F1916] text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wider shadow-sm hidden sm:block">
-                    360° · ZOOM · INSPECT
-                  </div>
+              {/* Overlays */}
+              <div className="absolute top-6 left-6 flex items-center gap-2">
+                <div className="bg-white/90 backdrop-blur-sm text-[#1F1916] text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wider flex items-center gap-2 shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                  LIVE PREVIEW
                 </div>
+                <div className="bg-[#BFA15F] text-[#1F1916] text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wider shadow-sm hidden sm:block">
+                  360° · ZOOM · INSPECT
+                </div>
+              </div>
 
-                <div className="absolute top-6 right-6">
-                  <button
-                    onClick={() => setIsRotating(!isRotating)}
-                    className={`text-[#1F1916] text-[11px] font-bold px-4 py-1.5 rounded-full tracking-wide shadow-sm transition-colors ${isRotating ? 'bg-white hover:bg-gray-100' : 'bg-white/50 hover:bg-white/80'
-                      }`}
-                  >
-                    Auto-rotate
-                  </button>
+              <div className="absolute top-6 right-6">
+                <button
+                  onClick={() => setIsRotating(!isRotating)}
+                  className={`text-[#1F1916] text-[11px] font-bold px-4 py-1.5 rounded-full tracking-wide shadow-sm transition-colors ${isRotating ? 'bg-white hover:bg-gray-100' : 'bg-white/50 hover:bg-white/80'
+                    }`}
+                >
+                  Auto-rotate
+                </button>
                 </div>
               </motion.div>
+              </div>
+            </div>
 
-              {/* Step 09: Instant Estimate Form */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
+            {/* Step 09: Instant Estimate Form (At bottom of right column) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
                 className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
@@ -451,7 +454,6 @@ const Customize = () => {
             </div>
           </div>
 
-        </div>
       </div>
     </div>
   );

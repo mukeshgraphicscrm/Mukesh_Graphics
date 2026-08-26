@@ -12,11 +12,6 @@
 
 @layer base {
 
-  html,
-  body {
-    overflow-x: clip;
-  }
-
   body {
     background-color: var(--color-brand-light);
     color: var(--color-brand-dark);
