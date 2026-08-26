@@ -448,7 +448,7 @@ Finishing: ${finishing}`;
                     <button
                       key={type}
                       onClick={() => handleTypeChange(type)}
-                      className={`px-5 py-3 rounded-full text-sm font-bold border text-center transition-all ${packagingType === type
+                      className={`px-5 py-3 rounded-full text-sm font-bold border text-center transition-all cursor-pointer ${packagingType === type
                         ? 'bg-[#FF7B3B] text-white border-[#FF7B3B] shadow-md'
                         : 'bg-white text-gray-700 border-gray-200 hover:border-[#FF7B3B] hover:text-[#FF7B3B]'
                         }`}
@@ -489,7 +489,7 @@ Finishing: ${finishing}`;
                             setBoxStructure(structure);
                             setIsStructureOpen(false);
                           }}
-                          className={`px-5 py-4 text-left font-bold text-[15px] transition-colors ${boxStructure === structure ? 'bg-[#FF7B3B]/10 text-[#FF7B3B]' : 'text-gray-700 hover:bg-gray-50 hover:text-[#1F1916]'}`}
+                          className={`px-5 py-4 text-left font-bold text-[15px] transition-colors cursor-pointer ${boxStructure === structure ? 'bg-[#FF7B3B]/10 text-[#FF7B3B]' : 'text-gray-700 hover:bg-gray-50 hover:text-[#1F1916]'}`}
                         >
                           {structure}
                         </button>
@@ -546,7 +546,7 @@ Finishing: ${finishing}`;
                     <button
                       key={unit}
                       onClick={() => setDimensions({ ...dimensions, unit })}
-                      className={`px-5 py-1.5 rounded-full text-xs font-bold transition-all ${dimensions.unit === unit
+                      className={`px-5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${dimensions.unit === unit
                         ? 'bg-[#FF7B3B] text-white shadow-md'
                         : 'text-gray-500 hover:text-[#FF7B3B]'
                         }`}
@@ -574,7 +574,7 @@ Finishing: ${finishing}`;
                     <button
                       key={mat.name}
                       onClick={() => setMaterial(mat.name)}
-                      className={`text-left p-4 rounded-xl border transition-all ${material === mat.name
+                      className={`text-left p-4 rounded-xl border transition-all cursor-pointer ${material === mat.name
                         ? 'border-[#FF7B3B] bg-orange-50/30 shadow-sm ring-1 ring-[#FF7B3B]'
                         : 'border-gray-200 hover:border-[#FF7B3B] hover:bg-gray-50/50'
                         }`}
@@ -603,7 +603,7 @@ Finishing: ${finishing}`;
                     <button
                       key={print}
                       onClick={() => setPrinting(print)}
-                      className={`px-5 py-2.5 rounded-full text-sm font-bold border transition-all ${printing === print
+                      className={`px-5 py-2.5 rounded-full text-sm font-bold border transition-all cursor-pointer ${printing === print
                         ? 'bg-[#FF7B3B] text-white border-[#FF7B3B] shadow-md'
                         : 'bg-white text-gray-700 border-gray-200 hover:border-[#FF7B3B] hover:text-[#FF7B3B]'
                         }`}
@@ -631,7 +631,7 @@ Finishing: ${finishing}`;
                     <button
                       key={fin}
                       onClick={() => setFinishing(fin)}
-                      className={`px-5 py-3 rounded-full text-sm font-bold border text-center transition-all ${finishing === fin
+                      className={`px-5 py-3 rounded-full text-sm font-bold border text-center transition-all cursor-pointer ${finishing === fin
                         ? 'bg-[#FF7B3B] text-white border-[#FF7B3B] shadow-md'
                         : 'bg-white text-gray-700 border-gray-200 hover:border-[#FF7B3B] hover:text-[#FF7B3B]'
                         }`}
