@@ -37,16 +37,18 @@ function BoxPreview({ dimensions, isRotating, artworkUrl }) {
 
   return (
     <group>
-      <mesh ref={boxRef} position={[0, 0, 0]}>
-        <boxGeometry args={[w, h, d]} />
-        {artworkUrl ? (
-          <React.Suspense fallback={<meshStandardMaterial color="#FFFFFF" roughness={0.2} metalness={0.1} />}>
-            <BoxTextureMaterial artworkUrl={artworkUrl} />
-          </React.Suspense>
-        ) : (
-          <meshStandardMaterial color="#FFFFFF" roughness={0.2} metalness={0.1} />
-        )}
-      </mesh>
+      <Bounds fit clip observe margin={1.2}>
+        <mesh ref={boxRef} position={[0, 0, 0]}>
+          <boxGeometry args={[w, h, d]} />
+          {artworkUrl ? (
+            <React.Suspense fallback={<meshStandardMaterial color="#FFFFFF" roughness={0.2} metalness={0.1} />}>
+              <BoxTextureMaterial artworkUrl={artworkUrl} />
+            </React.Suspense>
+          ) : (
+            <meshStandardMaterial color="#FFFFFF" roughness={0.2} metalness={0.1} />
+          )}
+        </mesh>
+      </Bounds>
       <ContactShadows position={[0, -h / 2 - 0.01, 0]} opacity={0.4} scale={10} blur={2} far={4} />
       <Environment preset="city" />
     </group>
@@ -457,9 +459,7 @@ const Customize = () => {
                   <Canvas camera={{ position: [0, 2, 5], fov: 45 }}>
                     <ambientLight intensity={0.5} />
                     <directionalLight position={[10, 10, 5]} intensity={1} />
-                    <Bounds fit clip observe margin={1.2}>
-                      <BoxPreview dimensions={dimensions} isRotating={isRotating} artworkUrl={artworkUrl} />
-                    </Bounds>
+                    <BoxPreview dimensions={dimensions} isRotating={isRotating} artworkUrl={artworkUrl} />
                     <OrbitControls makeDefault enableZoom={true} enablePan={false} />
                   </Canvas>
 
