@@ -260,6 +260,17 @@ const Customize = () => {
     notes: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (success) {
+      timer = setTimeout(() => {
+        setSuccess(false);
+      }, 3000);
+    }
+    return () => clearTimeout(timer);
+  }, [success]);
 
   const handleFormChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -310,7 +321,7 @@ Finishing: ${finishing}`;
         },
         createdAt: serverTimestamp()
       });
-      alert('Estimate request submitted successfully!');
+      setSuccess(true);
       setFormData({
         fullName: '', company: '', phone: '', email: '', quantity: 5000, deliveryLocation: '', notes: ''
       });
@@ -687,6 +698,18 @@ Finishing: ${finishing}`;
                     </div>
                   </div>
 
+                  {success ? (
+                    <div className="h-[400px] flex flex-col items-center justify-center text-center py-12">
+                      <div className="w-16 h-16 bg-green-100 text-green-500 rounded-full flex items-center justify-center mb-6">
+                        <CheckCircle2 size={32} />
+                      </div>
+                      <h4 className="text-2xl font-bold mb-2">Request Received!</h4>
+                      <p className="text-gray-500">Our team will get back to you within 24 hours.</p>
+                      <button onClick={() => setSuccess(false)} className="mt-8 text-[#FF7B3B] font-medium">
+                        Submit another request
+                      </button>
+                    </div>
+                  ) : (
                   <form className="space-y-5" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
@@ -746,6 +769,7 @@ Finishing: ${finishing}`;
                       By submitting you agree to be contacted about your packaging request. We never share your details. Prefer to email us instead?
                     </p>
                   </form>
+                  )}
                 </motion.div>
 
               </div>
