@@ -103,10 +103,13 @@ const Customize = () => {
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8 items-stretch">
+        <div className="flex flex-col gap-8">
+          
+          {/* ROW 1: Steps 1-4 & 3D Preview */}
+          <div className="flex flex-col lg:flex-row gap-8 items-stretch">
 
-          {/* Left Column - Form Steps */}
-          <div className="w-full lg:w-[45%] flex flex-col gap-6">
+            {/* Left Column A */}
+            <div className="w-full lg:w-[45%] flex flex-col gap-6">
 
             {/* Step 01: Packaging type */}
             <motion.div
@@ -325,135 +328,128 @@ const Customize = () => {
                 <div className="font-bold text-[#1F1916] mb-1">Drag & drop or browse</div>
                 <div className="text-xs text-gray-500">PDF, AI, PSD, PNG, JPEG up to 20MB</div>
               </div>
-              <p className="text-[11px] text-gray-500 mt-4 leading-relaxed">
-                Images apply live on the 3D preview. PDF / AI / PSD are received with your quote request.
-              </p>
             </motion.div>
 
-          </div>
+            </div>
 
-          {/* Right Column - 3D Preview & Form */}
-          <div className="w-full lg:w-[55%] flex flex-col gap-6 h-full pb-8">
-
-            {/* Sticky 3D Preview Container wrapper */}
-            <div className="flex-1 relative">
+            {/* Right Column A - 3D Preview (Sticky until end of Row 1) */}
+            <div className="w-full lg:w-[55%]">
               <div className="lg:sticky lg:top-28 flex flex-col gap-6 z-20">
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-gradient-to-br from-[#4A0B0B] to-[#1A0303] rounded-[2.5rem] w-full aspect-[4/3] md:aspect-[16/10] relative overflow-hidden shadow-[0_20px_40px_rgba(74,11,11,0.2)] flex-shrink-0"
-            >
-              {/* 3D Canvas */}
-              <Canvas camera={{ position: [0, 2, 5], fov: 45 }}>
-                <ambientLight intensity={0.5} />
-                <directionalLight position={[10, 10, 5]} intensity={1} />
-                <BoxPreview dimensions={dimensions} isRotating={isRotating} />
-                <OrbitControls enableZoom={true} enablePan={false} />
-              </Canvas>
-
-              {/* Overlays */}
-              <div className="absolute top-6 left-6 flex items-center gap-2">
-                <div className="bg-white/90 backdrop-blur-sm text-[#1F1916] text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wider flex items-center gap-2 shadow-sm">
-                  <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                  LIVE PREVIEW
-                </div>
-                <div className="bg-[#BFA15F] text-[#1F1916] text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wider shadow-sm hidden sm:block">
-                  360° · ZOOM · INSPECT
-                </div>
-              </div>
-
-              <div className="absolute top-6 right-6">
-                <button
-                  onClick={() => setIsRotating(!isRotating)}
-                  className={`text-[#1F1916] text-[11px] font-bold px-4 py-1.5 rounded-full tracking-wide shadow-sm transition-colors ${isRotating ? 'bg-white hover:bg-gray-100' : 'bg-white/50 hover:bg-white/80'
-                    }`}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="bg-gradient-to-br from-[#4A0B0B] to-[#1A0303] rounded-[2.5rem] w-full aspect-[4/3] md:aspect-[16/10] relative overflow-hidden shadow-[0_20px_40px_rgba(74,11,11,0.2)] flex-shrink-0"
                 >
-                  Auto-rotate
-                </button>
-                </div>
-              </motion.div>
+                  {/* 3D Canvas */}
+                  <Canvas camera={{ position: [0, 2, 5], fov: 45 }}>
+                    <ambientLight intensity={0.5} />
+                    <directionalLight position={[10, 10, 5]} intensity={1} />
+                    <BoxPreview dimensions={dimensions} isRotating={isRotating} />
+                    <OrbitControls enableZoom={true} enablePan={false} />
+                  </Canvas>
+
+                  {/* Overlays */}
+                  <div className="absolute top-6 left-6 flex items-center gap-2">
+                    <div className="bg-white/90 backdrop-blur-sm text-[#1F1916] text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wider flex items-center gap-2 shadow-sm">
+                      <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                      LIVE PREVIEW
+                    </div>
+                    <div className="bg-[#BFA15F] text-[#1F1916] text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wider shadow-sm hidden sm:block">
+                      360° · ZOOM · INSPECT
+                    </div>
+                  </div>
+
+                  <div className="absolute top-6 right-6">
+                    <button
+                      onClick={() => setIsRotating(!isRotating)}
+                      className={`text-[#1F1916] text-[11px] font-bold px-4 py-1.5 rounded-full tracking-wide shadow-sm transition-colors ${isRotating ? 'bg-white hover:bg-gray-100' : 'bg-white/50 hover:bg-white/80'
+                        }`}
+                    >
+                      Auto-rotate
+                    </button>
+                  </div>
+                </motion.div>
+
+                {/* Step 09: Instant Estimate Form (Grouped with 3D Preview) */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
+                >
+                  <div className="flex items-center justify-between mb-8">
+                    <div>
+                      <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Step 09 · Instant Estimate</div>
+                      <h2 className="text-2xl font-bold text-[#1F1916]">Send your specification</h2>
+                    </div>
+                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest hidden sm:block">
+                      REF · MG-OK77UV
+                    </div>
+                  </div>
+
+                  <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <div>
+                        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Full Name</label>
+                        <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Company</label>
+                        <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <div>
+                        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Phone</label>
+                        <input type="tel" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Email</label>
+                        <input type="email" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <div>
+                        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Quantity</label>
+                        <input type="number" defaultValue={5000} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-bold transition-all bg-gray-50/50" />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Delivery Location</label>
+                        <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Notes</label>
+                      <textarea
+                        placeholder="Anything else we should know — special inks, certifications, deadlines."
+                        rows={3}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all resize-none bg-gray-50/50"
+                      />
+                    </div>
+
+                    <div className="pt-4 flex flex-col sm:flex-row gap-3">
+                      <button type="submit" className="flex-1 bg-gradient-to-r from-[#FF954B] to-[#FF6B2B] hover:from-[#FFA25B] hover:to-[#FF7B3B] text-white py-4 px-6 rounded-full font-bold transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2">
+                        Send for instant estimate &rarr;
+                      </button>
+                      <button type="button" className="sm:w-auto w-full bg-white text-[#1F1916] border border-gray-200 py-4 px-8 rounded-full font-bold hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm">
+                        Download spec
+                      </button>
+                    </div>
+
+                    <p className="text-[10px] text-gray-400 mt-4 leading-relaxed">
+                      By submitting you agree to be contacted about your packaging request. We never share your details. Prefer to email us instead?
+                    </p>
+                  </form>
+                </motion.div>
+
               </div>
             </div>
 
-            {/* Step 09: Instant Estimate Form (At bottom of right column) */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
-              >
-                <div className="flex items-center justify-between mb-8">
-                  <div>
-                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Step 09 · Instant Estimate</div>
-                    <h2 className="text-2xl font-bold text-[#1F1916]">Send your specification</h2>
-                  </div>
-                  <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest hidden sm:block">
-                    REF · MG-OK77UV
-                  </div>
-                </div>
-
-                <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Full Name</label>
-                      <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
-                    </div>
-                    <div>
-                      <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Company</label>
-                      <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Phone</label>
-                      <input type="tel" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
-                    </div>
-                    <div>
-                      <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Email</label>
-                      <input type="email" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Quantity</label>
-                      <input type="number" defaultValue={5000} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-bold transition-all bg-gray-50/50" />
-                    </div>
-                    <div>
-                      <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Delivery Location</label>
-                      <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Notes</label>
-                    <textarea
-                      placeholder="Anything else we should know — special inks, certifications, deadlines."
-                      rows={3}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all resize-none bg-gray-50/50"
-                    />
-                  </div>
-
-                  <div className="pt-4 flex flex-col sm:flex-row gap-3">
-                    <button type="submit" className="flex-1 bg-gradient-to-r from-[#FF954B] to-[#FF6B2B] hover:from-[#FFA25B] hover:to-[#FF7B3B] text-white py-4 px-6 rounded-full font-bold transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2">
-                      Send for instant estimate &rarr;
-                    </button>
-                    <button type="button" className="sm:w-auto w-full bg-white text-[#1F1916] border border-gray-200 py-4 px-8 rounded-full font-bold hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm">
-                      Download spec
-                    </button>
-                  </div>
-
-                  <p className="text-[10px] text-gray-400 mt-4 leading-relaxed">
-                    By submitting you agree to be contacted about your packaging request. We never share your details. Prefer to email us instead?
-                  </p>
-                </form>
-              </motion.div>
-
-            </div>
           </div>
-
+        </div>
       </div>
     </div>
   );
