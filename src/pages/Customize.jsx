@@ -1,12 +1,31 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
+import { db } from '../firebase/config';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { UploadCloud, CheckCircle2, Pause, Play, ChevronDown } from 'lucide-react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows, RoundedBox, Bounds } from '@react-three/drei';
 
+const materialProperties = {
+  'Duplex Board': { color: '#F0F0F0', roughness: 0.5 },
+  'Kraft Paper': { color: '#C19A6B', roughness: 0.9 },
+  'Rigid Board': { color: '#FAFAFA', roughness: 0.1 },
+  'SBS Board': { color: '#FFFFFF', roughness: 0.2 },
+  'Corrugated': { color: '#A67B5B', roughness: 0.9 },
+  'Eco-friendly': { color: '#E0D8C8', roughness: 0.8 }
+};
+
+const finishingProperties = {
+  'Gloss Lamination': { roughness: 0.05, metalness: 0.1, clearcoat: 1.0, clearcoatRoughness: 0.1 },
+  'Matt Lamination': { roughness: 0.85, metalness: 0.0, clearcoat: 0.0, clearcoatRoughness: 0.0 },
+  'Spot UV': { roughness: 0.4, metalness: 0.2, clearcoat: 0.6, clearcoatRoughness: 0.2 },
+  'Gold Foiling': { roughness: 0.2, metalness: 0.7, clearcoat: 0.3, clearcoatRoughness: 0.2 },
+  'Soft Touch': { roughness: 1.0, metalness: 0.0, clearcoat: 0.0, clearcoatRoughness: 0.0 },
+};
+
 // --- Texture Component ---
-function BoxTextureMaterial({ artworkUrl }) {
+function BoxTextureMaterial({ artworkUrl, baseColor, finishProps }) {
   const texture = useLoader(THREE.TextureLoader, artworkUrl);
   
   useEffect(() => {
@@ -16,11 +35,11 @@ function BoxTextureMaterial({ artworkUrl }) {
     }
   }, [texture]);
 
-  return <meshStandardMaterial color="#FFFFFF" roughness={0.2} metalness={0.1} map={texture} />;
+  return <meshPhysicalMaterial color={baseColor} map={texture} side={THREE.DoubleSide} {...finishProps} />;
 }
 
 // --- 3D Box Component ---
-function BoxPreview({ dimensions, isRotating, artworkUrl }) {
+function BoxPreview({ dimensions, isRotating, artworkUrl, boxStructure, material, finishing }) {
   const boxRef = useRef();
 
   useFrame((state, delta) => {
@@ -35,19 +54,122 @@ function BoxPreview({ dimensions, isRotating, artworkUrl }) {
   const h = Math.max(dimensions.height || 10, 1) * scaleFactor;
   const d = Math.max(dimensions.width || 10, 1) * scaleFactor;
 
+  const openAngle = Math.PI / 2 - 0.25; // slightly open to show structure
+  const closedAngle = Math.PI / 2;
+
+  const matProps = materialProperties[material] || materialProperties['SBS Board'];
+  const baseFinProps = finishingProperties[finishing] || finishingProperties['Matt Lamination'];
+  
+  // Combine material roughness with finishing properties
+  const finishProps = {
+    ...baseFinProps,
+    // If it's a rough material like kraft paper, it resists becoming perfectly glossy
+    roughness: Math.max(baseFinProps.roughness, matProps.roughness * 0.3) 
+  };
+
+  // Render a single panel (plane)
+  const Panel = ({ width, height, pos, rot }) => (
+    <mesh position={pos} rotation={rot}>
+      <planeGeometry args={[width, height]} />
+      {artworkUrl ? (
+        <React.Suspense fallback={<meshPhysicalMaterial color={matProps.color} side={THREE.DoubleSide} {...finishProps} />}>
+          <BoxTextureMaterial artworkUrl={artworkUrl} baseColor={matProps.color} finishProps={finishProps} />
+        </React.Suspense>
+      ) : (
+        <meshPhysicalMaterial color={matProps.color} side={THREE.DoubleSide} {...finishProps} />
+      )}
+    </mesh>
+  );
+
+  // Top flap (folds forward from back panel)
+  const TopFlap = ({ width, depth, height, angle }) => (
+    <group position={[0, height / 2, -depth / 2]} rotation={[angle, 0, 0]}>
+      <Panel width={width} height={depth} pos={[0, depth / 2, 0]} rot={[0, 0, 0]} />
+    </group>
+  );
+
+  // Bottom flap (folds forward from back panel)
+  const BottomFlapBack = ({ width, depth, height, angle, length }) => (
+    <group position={[0, -height / 2, -depth / 2]} rotation={[-angle, 0, 0]}>
+      <Panel width={width} height={length} pos={[0, -length / 2, 0]} rot={[0, 0, 0]} />
+    </group>
+  );
+
+  // Bottom flap (folds backward from front panel)
+  const BottomFlapFront = ({ width, depth, height, angle, length }) => (
+    <group position={[0, -height / 2, depth / 2]} rotation={[angle, 0, 0]}>
+      <Panel width={width} height={length} pos={[0, -length / 2, 0]} rot={[0, Math.PI, 0]} />
+    </group>
+  );
+
+  // Side flaps (for snap lock)
+  const BottomFlapSide = ({ width, depth, height, isRight, angle, length }) => (
+    <group position={[isRight ? width / 2 : -width / 2, -height / 2, 0]} rotation={[0, isRight ? Math.PI / 2 : -Math.PI / 2, 0]}>
+      <group rotation={[-angle, 0, 0]}>
+        <Panel width={depth} height={length} pos={[0, -length / 2, 0]} rot={[0, 0, 0]} />
+      </group>
+    </group>
+  );
+
+  const renderStructure = () => {
+    switch (boxStructure) {
+      case 'Straight Tuck End':
+        return (
+          <>
+            <TopFlap width={w} depth={d} height={h} angle={openAngle} />
+            <BottomFlapBack width={w} depth={d} height={h} angle={openAngle} length={d} />
+          </>
+        );
+      case 'Reverse Tuck End':
+        return (
+          <>
+            <TopFlap width={w} depth={d} height={h} angle={openAngle} />
+            <BottomFlapFront width={w} depth={d} height={h} angle={openAngle} length={d} />
+          </>
+        );
+      case 'Snap Lock Bottom':
+        return (
+          <>
+            <TopFlap width={w} depth={d} height={h} angle={openAngle} />
+            {/* Snap lock has 4 interlocking bottom flaps overlapping each other */}
+            <BottomFlapBack width={w} depth={d} height={h} angle={closedAngle - 0.05} length={d * 0.6} />
+            <BottomFlapFront width={w} depth={d} height={h} angle={closedAngle - 0.08} length={d * 0.6} />
+            <BottomFlapSide width={w} depth={d} height={h} isRight={false} angle={closedAngle - 0.1} length={w * 0.5} />
+            <BottomFlapSide width={w} depth={d} height={h} isRight={true} angle={closedAngle - 0.12} length={w * 0.5} />
+          </>
+        );
+      case 'Auto Bottom':
+        return (
+          <>
+            <TopFlap width={w} depth={d} height={h} angle={openAngle} />
+            {/* Auto bottom usually has 2 main overlapping panels glued */}
+            <BottomFlapBack width={w} depth={d} height={h} angle={closedAngle - 0.05} length={d} />
+            <BottomFlapFront width={w} depth={d} height={h} angle={closedAngle - 0.1} length={d} />
+          </>
+        );
+      default:
+        return (
+          <>
+            <TopFlap width={w} depth={d} height={h} angle={closedAngle} />
+            <BottomFlapBack width={w} depth={d} height={h} angle={closedAngle} length={d} />
+          </>
+        );
+    }
+  };
+
   return (
     <group>
-      <Bounds fit clip observe margin={1.2}>
-        <mesh ref={boxRef} position={[0, 0, 0]}>
-          <boxGeometry args={[w, h, d]} />
-          {artworkUrl ? (
-            <React.Suspense fallback={<meshStandardMaterial color="#FFFFFF" roughness={0.2} metalness={0.1} />}>
-              <BoxTextureMaterial artworkUrl={artworkUrl} />
-            </React.Suspense>
-          ) : (
-            <meshStandardMaterial color="#FFFFFF" roughness={0.2} metalness={0.1} />
-          )}
-        </mesh>
+      <Bounds fit observe margin={1.5}>
+        <group ref={boxRef}>
+          {/* Main 4 body panels */}
+          <Panel width={w} height={h} pos={[0, 0, d / 2]} rot={[0, 0, 0]} />
+          <Panel width={w} height={h} pos={[0, 0, -d / 2]} rot={[0, Math.PI, 0]} />
+          <Panel width={d} height={h} pos={[-w / 2, 0, 0]} rot={[0, -Math.PI / 2, 0]} />
+          <Panel width={d} height={h} pos={[w / 2, 0, 0]} rot={[0, Math.PI / 2, 0]} />
+
+          {/* Structural Flaps */}
+          {renderStructure()}
+        </group>
       </Bounds>
       <ContactShadows position={[0, -h / 2 - 0.01, 0]} opacity={0.4} scale={10} blur={2} far={4} />
       <Environment preset="city" />
@@ -128,6 +250,21 @@ const Customize = () => {
   const [isStructureOpen, setIsStructureOpen] = useState(false);
   const [artworkUrl, setArtworkUrl] = useState(null);
 
+  const [formData, setFormData] = useState({
+    fullName: '',
+    company: '',
+    phone: '',
+    email: '',
+    quantity: 5000,
+    deliveryLocation: '',
+    notes: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleFormChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -155,6 +292,33 @@ Finishing: ${finishing}`;
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      await addDoc(collection(db, 'custom_package'), {
+        ...formData,
+        specifications: {
+          packagingType,
+          boxStructure,
+          dimensions,
+          material,
+          printing,
+          finishing
+        },
+        createdAt: serverTimestamp()
+      });
+      alert('Estimate request submitted successfully!');
+      setFormData({
+        fullName: '', company: '', phone: '', email: '', quantity: 5000, deliveryLocation: '', notes: ''
+      });
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      alert('Failed to submit estimate request.');
+    }
+    setIsSubmitting(false);
   };
 
   const handleTypeChange = (type) => {
@@ -275,7 +439,7 @@ Finishing: ${finishing}`;
                     <span>{boxStructure}</span>
                     <ChevronDown size={20} className={`text-gray-500 transition-transform ${isStructureOpen ? 'rotate-180 text-[#FF7B3B]' : ''}`} />
                   </button>
-                  
+
                   {isStructureOpen && (
                     <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-100 rounded-xl shadow-[0_10px_25px_rgba(0,0,0,0.05)] overflow-hidden z-30 flex flex-col">
                       {boxStructures.map(structure => (
@@ -480,7 +644,7 @@ Finishing: ${finishing}`;
                   <Canvas camera={{ position: [0, 2, 5], fov: 45 }}>
                     <ambientLight intensity={0.5} />
                     <directionalLight position={[10, 10, 5]} intensity={1} />
-                    <BoxPreview dimensions={dimensions} isRotating={isRotating} artworkUrl={artworkUrl} />
+                    <BoxPreview dimensions={dimensions} isRotating={isRotating} artworkUrl={artworkUrl} boxStructure={boxStructure} material={material} finishing={finishing} />
                     <OrbitControls makeDefault enableZoom={true} enablePan={false} />
                   </Canvas>
 
@@ -515,7 +679,7 @@ Finishing: ${finishing}`;
                 >
                   <div className="flex items-center justify-between mb-8">
                     <div>
-                      <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Step 09 · Instant Estimate</div>
+                      <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Instant Estimate</div>
                       <h2 className="text-2xl font-bold text-[#1F1916]">Send your specification</h2>
                     </div>
                     <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest hidden sm:block">
@@ -523,43 +687,46 @@ Finishing: ${finishing}`;
                     </div>
                   </div>
 
-                  <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+                  <form className="space-y-5" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
                         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Full Name</label>
-                        <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                        <input type="text" name="fullName" value={formData.fullName} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
                       </div>
                       <div>
                         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Company</label>
-                        <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                        <input type="text" name="company" value={formData.company} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
                         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Phone</label>
-                        <input type="tel" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                        <input type="tel" name="phone" value={formData.phone} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
                       </div>
                       <div>
                         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Email</label>
-                        <input type="email" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                        <input type="email" name="email" value={formData.email} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
                         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Quantity</label>
-                        <input type="number" defaultValue={5000} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-bold transition-all bg-gray-50/50" />
+                        <input type="number" name="quantity" value={formData.quantity} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-bold transition-all bg-gray-50/50" />
                       </div>
                       <div>
                         <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Delivery Location</label>
-                        <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
+                        <input type="text" name="deliveryLocation" value={formData.deliveryLocation} onChange={handleFormChange} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all bg-gray-50/50" />
                       </div>
                     </div>
 
                     <div>
                       <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Notes</label>
                       <textarea
+                        name="notes"
+                        value={formData.notes}
+                        onChange={handleFormChange}
                         placeholder="Anything else we should know — special inks, certifications, deadlines."
                         rows={3}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-sm font-medium transition-all resize-none bg-gray-50/50"
@@ -567,8 +734,8 @@ Finishing: ${finishing}`;
                     </div>
 
                     <div className="pt-4 flex flex-col sm:flex-row gap-3">
-                      <button type="submit" className="flex-1 bg-gradient-to-r from-[#FF954B] to-[#FF6B2B] hover:from-[#FFA25B] hover:to-[#FF7B3B] text-white py-4 px-6 rounded-full font-bold transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2">
-                        Send for instant estimate &rarr;
+                      <button type="submit" disabled={isSubmitting} className="flex-1 bg-gradient-to-r from-[#FF954B] to-[#FF6B2B] hover:from-[#FFA25B] hover:to-[#FF7B3B] text-white py-4 px-6 rounded-full font-bold transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 disabled:opacity-70">
+                        {isSubmitting ? 'Sending...' : 'Send for instant estimate →'}
                       </button>
                       <button type="button" onClick={handleDownloadSpec} className="sm:w-auto w-full bg-white text-[#1F1916] border border-gray-200 py-4 px-8 rounded-full font-bold hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm">
                         Download spec
