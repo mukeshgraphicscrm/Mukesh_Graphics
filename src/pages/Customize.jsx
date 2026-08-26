@@ -37,17 +37,85 @@ function BoxPreview({ dimensions, isRotating }) {
   );
 }
 
+const packagingSpecs = {
+  'Ice Cream Box': {
+    structure: 'Reverse Tuck End',
+    dimensions: { length: 80, width: 80, height: 150, unit: 'MM' },
+    material: 'SBS Board',
+    printing: 'Full CMYK',
+    finishing: 'Gloss Lamination'
+  },
+  'Medicine Box': {
+    structure: 'Straight Tuck End',
+    dimensions: { length: 50, width: 50, height: 120, unit: 'MM' },
+    material: 'SBS Board',
+    printing: '4 Color',
+    finishing: 'Matt Lamination'
+  },
+  'Food Box': {
+    structure: 'Auto Bottom',
+    dimensions: { length: 150, width: 100, height: 60, unit: 'MM' },
+    material: 'Kraft Paper',
+    printing: 'Full CMYK',
+    finishing: 'Matt Lamination'
+  },
+  'Masala Box': {
+    structure: 'Straight Tuck End',
+    dimensions: { length: 60, width: 40, height: 100, unit: 'MM' },
+    material: 'Duplex Board',
+    printing: '5 Color Offset',
+    finishing: 'Gloss Lamination'
+  },
+  'Paper Bag': {
+    structure: 'Auto Bottom',
+    dimensions: { length: 200, width: 100, height: 250, unit: 'MM' },
+    material: 'Kraft Paper',
+    printing: '2 Color',
+    finishing: 'Matt Lamination'
+  },
+  'Cone Sleeve': {
+    structure: 'Snap Lock Bottom',
+    dimensions: { length: 50, width: 50, height: 160, unit: 'MM' },
+    material: 'Duplex Board',
+    printing: 'Full CMYK',
+    finishing: 'Gloss Lamination'
+  },
+  'Seed Box': {
+    structure: 'Reverse Tuck End',
+    dimensions: { length: 80, width: 20, height: 100, unit: 'MM' },
+    material: 'Eco-friendly',
+    printing: '4 Color',
+    finishing: 'Matt Lamination'
+  },
+  'Custom Carton': {
+    structure: 'Auto Bottom',
+    dimensions: { length: 300, width: 200, height: 150, unit: 'MM' },
+    material: 'Corrugated',
+    printing: 'Single Color',
+    finishing: 'Matt Lamination'
+  }
+};
+
 const Customize = () => {
-  // State for form selections
-  const [dimensions, setDimensions] = useState({ length: 120, width: 80, height: 60, unit: 'MM' });
+  // State for form selections - initialized with Ice Cream Box specs
   const [packagingType, setPackagingType] = useState('Ice Cream Box');
-  const [boxStructure, setBoxStructure] = useState('Straight Tuck End');
-  const [material, setMaterial] = useState('SBS Board');
-  const [printing, setPrinting] = useState('5 Color Offset');
-  const [finishing, setFinishing] = useState('Matt Lamination');
+  const [dimensions, setDimensions] = useState(packagingSpecs['Ice Cream Box'].dimensions);
+  const [boxStructure, setBoxStructure] = useState(packagingSpecs['Ice Cream Box'].structure);
+  const [material, setMaterial] = useState(packagingSpecs['Ice Cream Box'].material);
+  const [printing, setPrinting] = useState(packagingSpecs['Ice Cream Box'].printing);
+  const [finishing, setFinishing] = useState(packagingSpecs['Ice Cream Box'].finishing);
 
   // State for 3D interactions
   const [isRotating, setIsRotating] = useState(true);
+
+  const handleTypeChange = (type) => {
+    setPackagingType(type);
+    setDimensions(packagingSpecs[type].dimensions);
+    setBoxStructure(packagingSpecs[type].structure);
+    setMaterial(packagingSpecs[type].material);
+    setPrinting(packagingSpecs[type].printing);
+    setFinishing(packagingSpecs[type].finishing);
+  };
 
   // Form Data Options
   const packagingTypes = [
@@ -104,231 +172,231 @@ const Customize = () => {
         </div>
 
         <div className="flex flex-col gap-8">
-          
+
           {/* ROW 1: Steps 1-4 & 3D Preview */}
           <div className="flex flex-col lg:flex-row gap-8 items-stretch">
 
             {/* Left Column A */}
             <div className="w-full lg:w-[45%] flex flex-col gap-6">
 
-            {/* Step 01: Packaging type */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-2xl font-bold text-gray-300">01</span>
-                <h2 className="text-xl font-bold text-[#1F1916]">Packaging type</h2>
-              </div>
+              {/* Step 01: Packaging type */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="text-2xl font-bold text-gray-300">01</span>
+                  <h2 className="text-xl font-bold text-[#1F1916]">Packaging type</h2>
+                </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                {packagingTypes.map(type => (
-                  <button
-                    key={type}
-                    onClick={() => setPackagingType(type)}
-                    className={`px-5 py-3 rounded-full text-sm font-bold border text-center transition-all ${packagingType === type
-                      ? 'bg-[#FF7B3B] text-white border-[#FF7B3B] shadow-md'
-                      : 'bg-white text-gray-700 border-gray-200 hover:border-[#FF7B3B] hover:text-[#FF7B3B]'
-                      }`}
-                  >
-                    {type}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Step 02: Box structure */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05 }}
-              className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-2xl font-bold text-gray-300">02</span>
-                <h2 className="text-xl font-bold text-[#1F1916]">Box structure</h2>
-              </div>
-
-              <div className="relative">
-                <select
-                  value={boxStructure}
-                  onChange={(e) => setBoxStructure(e.target.value)}
-                  className="w-full appearance-none px-5 py-4 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-[#1F1916] font-bold bg-white transition-all cursor-pointer"
-                >
-                  {boxStructures.map(structure => (
-                    <option key={structure} value={structure}>{structure}</option>
+                <div className="grid grid-cols-2 gap-3">
+                  {packagingTypes.map(type => (
+                    <button
+                      key={type}
+                      onClick={() => handleTypeChange(type)}
+                      className={`px-5 py-3 rounded-full text-sm font-bold border text-center transition-all ${packagingType === type
+                        ? 'bg-[#FF7B3B] text-white border-[#FF7B3B] shadow-md'
+                        : 'bg-white text-gray-700 border-gray-200 hover:border-[#FF7B3B] hover:text-[#FF7B3B]'
+                        }`}
+                    >
+                      {type}
+                    </button>
                   ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-gray-500">
-                  <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
 
-            {/* Step 03: Dimensions */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-2xl font-bold text-gray-300">03</span>
-                <h2 className="text-xl font-bold text-[#1F1916]">Dimensions</h2>
-              </div>
+              {/* Step 02: Box structure */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05 }}
+                className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="text-2xl font-bold text-gray-300">02</span>
+                  <h2 className="text-xl font-bold text-[#1F1916]">Box structure</h2>
+                </div>
 
-              <div className="grid grid-cols-3 gap-4 mb-6">
-                <div>
-                  <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Length</label>
-                  <input
-                    type="number"
-                    value={dimensions.length}
-                    onChange={(e) => setDimensions({ ...dimensions, length: Number(e.target.value) })}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-[#1F1916] font-bold transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Width</label>
-                  <input
-                    type="number"
-                    value={dimensions.width}
-                    onChange={(e) => setDimensions({ ...dimensions, width: Number(e.target.value) })}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-[#1F1916] font-bold transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Height</label>
-                  <input
-                    type="number"
-                    value={dimensions.height}
-                    onChange={(e) => setDimensions({ ...dimensions, height: Number(e.target.value) })}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-[#1F1916] font-bold transition-all"
-                  />
-                </div>
-              </div>
-
-              <div className="inline-flex bg-gray-50 rounded-full p-1 border border-gray-100">
-                {['MM', 'CM', 'INCH'].map(unit => (
-                  <button
-                    key={unit}
-                    onClick={() => setDimensions({ ...dimensions, unit })}
-                    className={`px-5 py-1.5 rounded-full text-xs font-bold transition-all ${dimensions.unit === unit
-                      ? 'bg-[#FF7B3B] text-white shadow-md'
-                      : 'text-gray-500 hover:text-[#FF7B3B]'
-                      }`}
+                <div className="relative">
+                  <select
+                    value={boxStructure}
+                    onChange={(e) => setBoxStructure(e.target.value)}
+                    className="w-full appearance-none px-5 py-4 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-[#1F1916] font-bold bg-white transition-all cursor-pointer"
                   >
-                    {unit}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Step 04: Material */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 }}
-              className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-2xl font-bold text-gray-300">04</span>
-                <h2 className="text-xl font-bold text-[#1F1916]">Material</h2>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {materials.map(mat => (
-                  <button
-                    key={mat.name}
-                    onClick={() => setMaterial(mat.name)}
-                    className={`text-left p-4 rounded-xl border transition-all ${material === mat.name
-                      ? 'border-[#FF7B3B] bg-orange-50/30 shadow-sm ring-1 ring-[#FF7B3B]'
-                      : 'border-gray-200 hover:border-[#FF7B3B] hover:bg-gray-50/50'
-                      }`}
-                  >
-                    <div className="font-bold text-[#1F1916] text-[15px]">{mat.name}</div>
-                    <div className="text-xs text-gray-500 mt-1">{mat.desc}</div>
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Step 05: Printing */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-2xl font-bold text-gray-300">05</span>
-                <h2 className="text-xl font-bold text-[#1F1916]">Printing</h2>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {printings.map(print => (
-                  <button
-                    key={print}
-                    onClick={() => setPrinting(print)}
-                    className={`px-5 py-2.5 rounded-full text-sm font-bold border transition-all ${printing === print
-                      ? 'bg-[#FF7B3B] text-white border-[#FF7B3B] shadow-md'
-                      : 'bg-white text-gray-700 border-gray-200 hover:border-[#FF7B3B] hover:text-[#FF7B3B]'
-                      }`}
-                  >
-                    {print}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Step 06: Finishing */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25 }}
-              className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-2xl font-bold text-gray-300">06</span>
-                <h2 className="text-xl font-bold text-[#1F1916]">Finishing</h2>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                {finishings.map(fin => (
-                  <button
-                    key={fin}
-                    onClick={() => setFinishing(fin)}
-                    className={`px-5 py-3 rounded-full text-sm font-bold border text-center transition-all ${finishing === fin
-                      ? 'bg-[#FF7B3B] text-white border-[#FF7B3B] shadow-md'
-                      : 'bg-white text-gray-700 border-gray-200 hover:border-[#FF7B3B] hover:text-[#FF7B3B]'
-                      }`}
-                  >
-                    {fin}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Step 07: Upload Artwork */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-2xl font-bold text-gray-300">07</span>
-                <h2 className="text-xl font-bold text-[#1F1916]">Upload artwork</h2>
-              </div>
-
-              <div className="border-2 border-dashed border-[#FF7B3B]/30 hover:border-[#FF7B3B] bg-white rounded-[1.5rem] p-10 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-orange-50/30 transition-all group">
-                <div className="bg-orange-100 p-3 rounded-full text-[#FF7B3B] mb-4 group-hover:scale-110 group-hover:rotate-3 transition-transform">
-                  <UploadCloud size={24} />
+                    {boxStructures.map(structure => (
+                      <option key={structure} value={structure}>{structure}</option>
+                    ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-gray-500">
+                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                  </div>
                 </div>
-                <div className="font-bold text-[#1F1916] mb-1">Drag & drop or browse</div>
-                <div className="text-xs text-gray-500">PDF, AI, PSD, PNG, JPEG up to 20MB</div>
-              </div>
-            </motion.div>
+              </motion.div>
+
+              {/* Step 03: Dimensions */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="text-2xl font-bold text-gray-300">03</span>
+                  <h2 className="text-xl font-bold text-[#1F1916]">Dimensions</h2>
+                </div>
+
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                  <div>
+                    <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Length</label>
+                    <input
+                      type="number"
+                      value={dimensions.length}
+                      onChange={(e) => setDimensions({ ...dimensions, length: Number(e.target.value) })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-[#1F1916] font-bold transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Width</label>
+                    <input
+                      type="number"
+                      value={dimensions.width}
+                      onChange={(e) => setDimensions({ ...dimensions, width: Number(e.target.value) })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-[#1F1916] font-bold transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Height</label>
+                    <input
+                      type="number"
+                      value={dimensions.height}
+                      onChange={(e) => setDimensions({ ...dimensions, height: Number(e.target.value) })}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#FF7B3B] focus:ring-1 focus:ring-[#FF7B3B] outline-none text-[#1F1916] font-bold transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div className="inline-flex bg-gray-50 rounded-full p-1 border border-gray-100">
+                  {['MM', 'CM', 'INCH'].map(unit => (
+                    <button
+                      key={unit}
+                      onClick={() => setDimensions({ ...dimensions, unit })}
+                      className={`px-5 py-1.5 rounded-full text-xs font-bold transition-all ${dimensions.unit === unit
+                        ? 'bg-[#FF7B3B] text-white shadow-md'
+                        : 'text-gray-500 hover:text-[#FF7B3B]'
+                        }`}
+                    >
+                      {unit}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Step 04: Material */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 }}
+                className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="text-2xl font-bold text-gray-300">04</span>
+                  <h2 className="text-xl font-bold text-[#1F1916]">Material</h2>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {materials.map(mat => (
+                    <button
+                      key={mat.name}
+                      onClick={() => setMaterial(mat.name)}
+                      className={`text-left p-4 rounded-xl border transition-all ${material === mat.name
+                        ? 'border-[#FF7B3B] bg-orange-50/30 shadow-sm ring-1 ring-[#FF7B3B]'
+                        : 'border-gray-200 hover:border-[#FF7B3B] hover:bg-gray-50/50'
+                        }`}
+                    >
+                      <div className="font-bold text-[#1F1916] text-[15px]">{mat.name}</div>
+                      <div className="text-xs text-gray-500 mt-1">{mat.desc}</div>
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Step 05: Printing */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="text-2xl font-bold text-gray-300">05</span>
+                  <h2 className="text-xl font-bold text-[#1F1916]">Printing</h2>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {printings.map(print => (
+                    <button
+                      key={print}
+                      onClick={() => setPrinting(print)}
+                      className={`px-5 py-2.5 rounded-full text-sm font-bold border transition-all ${printing === print
+                        ? 'bg-[#FF7B3B] text-white border-[#FF7B3B] shadow-md'
+                        : 'bg-white text-gray-700 border-gray-200 hover:border-[#FF7B3B] hover:text-[#FF7B3B]'
+                        }`}
+                    >
+                      {print}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Step 06: Finishing */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25 }}
+                className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="text-2xl font-bold text-gray-300">06</span>
+                  <h2 className="text-xl font-bold text-[#1F1916]">Finishing</h2>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  {finishings.map(fin => (
+                    <button
+                      key={fin}
+                      onClick={() => setFinishing(fin)}
+                      className={`px-5 py-3 rounded-full text-sm font-bold border text-center transition-all ${finishing === fin
+                        ? 'bg-[#FF7B3B] text-white border-[#FF7B3B] shadow-md'
+                        : 'bg-white text-gray-700 border-gray-200 hover:border-[#FF7B3B] hover:text-[#FF7B3B]'
+                        }`}
+                    >
+                      {fin}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Step 07: Upload Artwork */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100"
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="text-2xl font-bold text-gray-300">07</span>
+                  <h2 className="text-xl font-bold text-[#1F1916]">Upload artwork</h2>
+                </div>
+
+                <div className="border-2 border-dashed border-[#FF7B3B]/30 hover:border-[#FF7B3B] bg-white rounded-[1.5rem] p-10 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-orange-50/30 transition-all group">
+                  <div className="bg-orange-100 p-3 rounded-full text-[#FF7B3B] mb-4 group-hover:scale-110 group-hover:rotate-3 transition-transform">
+                    <UploadCloud size={24} />
+                  </div>
+                  <div className="font-bold text-[#1F1916] mb-1">Drag & drop or browse</div>
+                  <div className="text-xs text-gray-500">PDF, AI, PSD, PNG, JPEG up to 20MB</div>
+                </div>
+              </motion.div>
 
             </div>
 
