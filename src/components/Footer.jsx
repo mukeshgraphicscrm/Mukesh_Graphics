@@ -28,7 +28,7 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          
+
           <div className="md:col-span-1">
             <h4 className="font-bold text-[0.7rem] tracking-widest uppercase text-brand-orange mb-5">Solutions</h4>
             <ul className="space-y-[0.85rem] font-semibold text-[0.85rem] text-[#9e968f]">
@@ -39,7 +39,7 @@ const Footer = () => {
               <li><a href="#" className="hover:text-brand-orange transition-colors">Custom Die-Cut</a></li>
             </ul>
           </div>
-          
+
           <div className="md:col-span-1">
             <h4 className="font-bold text-[0.7rem] tracking-widest uppercase text-brand-orange mb-5">Industries</h4>
             <ul className="space-y-[0.85rem] font-semibold text-[0.85rem] text-[#9e968f]">
@@ -50,7 +50,7 @@ const Footer = () => {
               <li><a href="#" className="hover:text-brand-orange transition-colors">Exports</a></li>
             </ul>
           </div>
-          
+
           <div className="md:col-span-1">
             <h4 className="font-bold text-[0.7rem] tracking-widest uppercase text-brand-orange mb-5">Company</h4>
             <ul className="space-y-[0.85rem] font-semibold text-[0.85rem] text-[#9e968f]">
@@ -62,7 +62,7 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[#7a746f]">
           <p className="text-[0.7rem] font-semibold">© 2026 Mukesh Graphics. All rights reserved.</p>
           <div className="flex items-center gap-6">
