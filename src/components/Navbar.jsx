@@ -44,6 +44,7 @@ const Navbar = () => {
     { name: 'Gallery', href: '#gallery' },
     { name: 'Contact', href: '#contact' },
     { name: 'Careers', href: '/careers' },
+    { name: 'Customize Packaging', href: '/customize' },
   ];
 
   return (

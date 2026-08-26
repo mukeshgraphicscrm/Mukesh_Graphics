@@ -14,6 +14,7 @@ import Contact from './sections/Contact';
 import Footer from './components/Footer';
 import Marquee from './components/Marquee';
 import Careers from './pages/Careers';
+import Customize from './pages/Customize';
 
 const pageVariants = {
   initial: { opacity: 0, y: 15, filter: "blur(8px)" },
@@ -58,6 +59,7 @@ function App() {
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
           <Route path="/careers" element={<Careers />} />
+          <Route path="/customize" element={<Customize />} />
         </Routes>
       </AnimatePresence>
       <Footer />
