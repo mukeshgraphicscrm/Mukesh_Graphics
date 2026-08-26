@@ -1,9 +1,28 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+const pageVariants = {
+  initial: { opacity: 0, y: 15, filter: "blur(8px)" },
+  in: { opacity: 1, y: 0, filter: "blur(0px)" },
+  out: { opacity: 0, y: -15, filter: "blur(8px)" }
+};
+
+const pageTransition = {
+  type: "tween",
+  ease: [0.22, 1, 0.36, 1],
+  duration: 0.6
+};
+
 const Careers = () => {
   return (
-    <div className="pt-32 pb-20 min-h-screen bg-[#FFFDF9]">
+    <motion.div 
+      initial="initial"
+      animate="in"
+      exit="out"
+      variants={pageVariants}
+      transition={pageTransition}
+      className="pt-32 pb-20 min-h-screen bg-[#FFFDF9]"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -77,7 +96,7 @@ const Careers = () => {
           </a>
         </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
