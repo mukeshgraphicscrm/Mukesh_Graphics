@@ -18,11 +18,23 @@ const Careers = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedJob, setSelectedJob] = useState(null);
+  const [isApplying, setIsApplying] = useState(false);
+
+  const closeModal = () => {
+    setSelectedJob(null);
+    setTimeout(() => setIsApplying(false), 300);
+  };
+
+  const handleApplySubmit = (e) => {
+    e.preventDefault();
+    alert("Application submitted successfully!");
+    closeModal();
+  };
 
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
-        setSelectedJob(null);
+        closeModal();
       }
     };
 
@@ -148,7 +160,7 @@ const Careers = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-            onClick={() => setSelectedJob(null)}
+            onClick={closeModal}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -158,7 +170,7 @@ const Careers = () => {
               className="bg-white rounded-3xl p-6 md:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative"
             >
               <button 
-                onClick={() => setSelectedJob(null)}
+                onClick={closeModal}
                 className="absolute top-6 right-6 p-2 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
@@ -196,19 +208,69 @@ const Careers = () => {
                 )}
               </div>
               
-              <div className="mb-8">
-                <h4 className="text-lg font-bold text-gray-900 mb-2">Job Description</h4>
-                <p className="text-gray-600 whitespace-pre-wrap leading-relaxed">
-                  {selectedJob.description}
-                </p>
-              </div>
-              
-              <a 
-                href={`mailto:careers@mukeshgraphics.com?subject=Application for ${encodeURIComponent(selectedJob.title)}`}
-                className="block w-full text-center bg-brand-orange text-white py-4 rounded-full font-bold text-lg hover:bg-[#1F1916] transition-colors shadow-lg hover:shadow-xl cursor-pointer"
-              >
-                Apply Now
-              </a>
+              {isApplying ? (
+                <motion.form 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  onSubmit={handleApplySubmit} 
+                  className="space-y-4"
+                >
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                    <input type="text" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors" placeholder="John Doe" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                    <input type="email" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors" placeholder="john@example.com" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+                    <input type="tel" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors" placeholder="+91 98765 43210" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Resume/CV (PDF) *</label>
+                    <input type="file" accept=".pdf" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-orange/10 file:text-brand-orange hover:file:bg-brand-orange/20 cursor-pointer file:cursor-pointer text-gray-500" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Cover Letter (Optional)</label>
+                    <textarea rows="4" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors" placeholder="Why are you a great fit for this role?"></textarea>
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                    <button 
+                      type="button" 
+                      onClick={() => setIsApplying(false)}
+                      className="w-full sm:w-1/3 bg-gray-100 text-gray-800 py-4 rounded-full font-bold text-lg hover:bg-gray-200 transition-colors cursor-pointer"
+                    >
+                      Back
+                    </button>
+                    <button 
+                      type="submit"
+                      className="w-full sm:w-2/3 bg-brand-orange text-white py-4 rounded-full font-bold text-lg hover:bg-[#1F1916] transition-colors shadow-lg hover:shadow-xl cursor-pointer"
+                    >
+                      Submit Application
+                    </button>
+                  </div>
+                </motion.form>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                >
+                  <div className="mb-8">
+                    <h4 className="text-lg font-bold text-gray-900 mb-2">Job Description</h4>
+                    <p className="text-gray-600 whitespace-pre-wrap leading-relaxed">
+                      {selectedJob.description}
+                    </p>
+                  </div>
+                  
+                  <button 
+                    onClick={() => setIsApplying(true)}
+                    className="block w-full text-center bg-brand-orange text-white py-4 rounded-full font-bold text-lg hover:bg-[#1F1916] transition-colors shadow-lg hover:shadow-xl cursor-pointer"
+                  >
+                    Apply Now
+                  </button>
+                </motion.div>
+              )}
             </motion.div>
           </motion.div>
         )}
