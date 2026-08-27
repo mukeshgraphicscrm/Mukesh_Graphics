@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Briefcase, MapPin, Building, IndianRupee } from 'lucide-react';
+import { db, storage } from '../firebase/config';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const pageVariants = {
   initial: { opacity: 0, y: 15, filter: "blur(8px)" },
@@ -19,16 +22,57 @@ const Careers = () => {
   const [loading, setLoading] = useState(true);
   const [selectedJob, setSelectedJob] = useState(null);
   const [isApplying, setIsApplying] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const closeModal = () => {
     setSelectedJob(null);
-    setTimeout(() => setIsApplying(false), 300);
+    setTimeout(() => {
+      setIsApplying(false);
+      setIsSubmitting(false);
+    }, 300);
   };
 
-  const handleApplySubmit = (e) => {
+  const handleApplySubmit = async (e) => {
     e.preventDefault();
-    alert("Application submitted successfully!");
-    closeModal();
+    setIsSubmitting(true);
+    
+    try {
+      const formData = new FormData(e.target);
+      const fullName = formData.get('fullName');
+      const email = formData.get('email');
+      const phone = formData.get('phone');
+      const coverLetter = formData.get('coverLetter');
+      const resumeFile = formData.get('resume');
+      
+      let resumeUrl = '';
+      if (resumeFile && resumeFile.size > 0) {
+        const storageRef = ref(storage, `resumes/${Date.now()}_${resumeFile.name.replace(/[^a-zA-Z0-9.]/g, '_')}`);
+        const uploadResult = await uploadBytes(storageRef, resumeFile);
+        resumeUrl = await getDownloadURL(uploadResult.ref);
+      }
+
+      await addDoc(collection(db, 'application_received'), {
+        jobId: selectedJob.id || null,
+        jobTitle: selectedJob.title,
+        jobDepartment: selectedJob.department || null,
+        jobLocation: selectedJob.location || null,
+        fullName,
+        email,
+        phone,
+        coverLetter: coverLetter || '',
+        resumeUrl,
+        appliedAt: serverTimestamp(),
+        status: 'new'
+      });
+
+      alert("Application submitted successfully!");
+      closeModal();
+    } catch (error) {
+      console.error("Error submitting application:", error);
+      alert("There was an error submitting your application. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   useEffect(() => {
@@ -217,37 +261,39 @@ const Careers = () => {
                 >
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-                    <input type="text" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors" placeholder="John Doe" />
+                    <input type="text" name="fullName" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors" placeholder="John Doe" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
-                    <input type="email" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors" placeholder="john@example.com" />
+                    <input type="email" name="email" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors" placeholder="john@example.com" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
-                    <input type="tel" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors" placeholder="+91 98765 43210" />
+                    <input type="tel" name="phone" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors" placeholder="+91 98765 43210" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Resume/CV (PDF) *</label>
-                    <input type="file" accept=".pdf" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-orange/10 file:text-brand-orange hover:file:bg-brand-orange/20 cursor-pointer file:cursor-pointer text-gray-500" />
+                    <input type="file" name="resume" accept=".pdf" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-orange/10 file:text-brand-orange hover:file:bg-brand-orange/20 cursor-pointer file:cursor-pointer text-gray-500" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Cover Letter (Optional)</label>
-                    <textarea rows="4" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors" placeholder="Why are you a great fit for this role?"></textarea>
+                    <textarea name="coverLetter" rows="4" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors" placeholder="Why are you a great fit for this role?"></textarea>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-4 pt-4">
                     <button 
                       type="button" 
                       onClick={() => setIsApplying(false)}
-                      className="w-full sm:w-1/3 bg-gray-100 text-gray-800 py-4 rounded-full font-bold text-lg hover:bg-gray-200 transition-colors cursor-pointer"
+                      disabled={isSubmitting}
+                      className="w-full sm:w-1/3 bg-gray-100 text-gray-800 py-4 rounded-full font-bold text-lg hover:bg-gray-200 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Back
                     </button>
                     <button 
                       type="submit"
-                      className="w-full sm:w-2/3 bg-brand-orange text-white py-4 rounded-full font-bold text-lg hover:bg-[#1F1916] transition-colors shadow-lg hover:shadow-xl cursor-pointer"
+                      disabled={isSubmitting}
+                      className="w-full sm:w-2/3 bg-brand-orange text-white py-4 rounded-full font-bold text-lg hover:bg-[#1F1916] transition-colors shadow-lg hover:shadow-xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Submit Application
+                      {isSubmitting ? "Submitting..." : "Submit Application"}
                     </button>
                   </div>
                 </motion.form>
