@@ -42,7 +42,7 @@ app.get('/api/jobs', async (req, res) => {
 
 app.post('/api/apply', async (req, res) => {
   try {
-    const { jobId, jobTitle, jobDepartment, jobLocation, fullName, email, phone, coverLetter } = req.body;
+    const { jobId, jobTitle, jobDepartment, jobLocation, fullName, email, phone, coverLetter, resumeUrl } = req.body;
     
     const docRef = await adminDb.collection('application_received').add({
       jobId: jobId || null,
@@ -53,6 +53,7 @@ app.post('/api/apply', async (req, res) => {
       email,
       phone,
       coverLetter: coverLetter || '',
+      resumeUrl: resumeUrl || null,
       appliedAt: new Date().toISOString(),
       status: 'new'
     });
