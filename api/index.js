@@ -40,6 +40,30 @@ app.get('/api/jobs', async (req, res) => {
   }
 });
 
+app.post('/api/apply', async (req, res) => {
+  try {
+    const { jobId, jobTitle, jobDepartment, jobLocation, fullName, email, phone, coverLetter } = req.body;
+    
+    const docRef = await adminDb.collection('application_received').add({
+      jobId: jobId || null,
+      jobTitle,
+      jobDepartment: jobDepartment || null,
+      jobLocation: jobLocation || null,
+      fullName,
+      email,
+      phone,
+      coverLetter: coverLetter || '',
+      appliedAt: new Date().toISOString(),
+      status: 'new'
+    });
+    
+    res.status(200).json({ success: true, id: docRef.id });
+  } catch (error) {
+    console.error('Error submitting application:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
 // Expose the Express app for Vercel Serverless Functions
 export default app;
 
