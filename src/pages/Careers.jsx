@@ -1,5 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Briefcase, MapPin, Building, IndianRupee } from 'lucide-react';
 
 const pageVariants = {
   initial: { opacity: 0, y: 15, filter: "blur(8px)" },
@@ -14,6 +15,53 @@ const pageTransition = {
 };
 
 const Careers = () => {
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedJob, setSelectedJob] = useState(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setSelectedJob(null);
+      }
+    };
+
+    if (selectedJob) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedJob]);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await fetch('/api/jobs');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        if (data.success) {
+          setJobs(data.jobs);
+        } else {
+          throw new Error(data.error || 'Failed to fetch jobs');
+        }
+      } catch (error) {
+        console.error("Error fetching jobs: ", error);
+        setJobs([{id: 'error', type: 'Error', title: 'API Error', description: String(error.message)}]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
   return (
     <motion.div 
       initial="initial"
@@ -44,41 +92,31 @@ const Careers = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
         >
-          {/* Job Card 1 */}
-          <div className="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow">
-            <div className="inline-block px-3 py-1 bg-brand-orange/10 text-brand-orange rounded-full text-sm font-semibold mb-4">
-              Full Time
+          {loading ? (
+            <div className="col-span-full py-12 text-center text-gray-500">
+              Loading open positions...
             </div>
-            <h3 className="text-2xl font-serif font-bold text-brand-dark mb-2">Graphic Designer</h3>
-            <p className="text-gray-600 mb-6">Looking for an experienced graphic designer with a strong portfolio in branding and print design.</p>
-            <button className="w-full bg-[#1F1916] text-white py-3 rounded-full font-semibold hover:bg-brand-orange transition-colors">
-              Apply Now
-            </button>
-          </div>
-
-          {/* Job Card 2 */}
-          <div className="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow">
-            <div className="inline-block px-3 py-1 bg-brand-orange/10 text-brand-orange rounded-full text-sm font-semibold mb-4">
-              Part Time
+          ) : jobs.length === 0 ? (
+            <div className="col-span-full py-12 text-center text-gray-500">
+              No open positions currently available. Please check back later.
             </div>
-            <h3 className="text-2xl font-serif font-bold text-brand-dark mb-2">Social Media Executive</h3>
-            <p className="text-gray-600 mb-6">Seeking a creative mind to handle our social media accounts, create engaging content, and drive growth.</p>
-            <button className="w-full bg-[#1F1916] text-white py-3 rounded-full font-semibold hover:bg-brand-orange transition-colors">
-              Apply Now
-            </button>
-          </div>
-
-          {/* Job Card 3 */}
-          <div className="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow">
-            <div className="inline-block px-3 py-1 bg-brand-orange/10 text-brand-orange rounded-full text-sm font-semibold mb-4">
-              Internship
-            </div>
-            <h3 className="text-2xl font-serif font-bold text-brand-dark mb-2">Web UI/UX Intern</h3>
-            <p className="text-gray-600 mb-6">A great opportunity for a budding designer to learn and work on real-world website projects with our team.</p>
-            <button className="w-full bg-[#1F1916] text-white py-3 rounded-full font-semibold hover:bg-brand-orange transition-colors">
-              Apply Now
-            </button>
-          </div>
+          ) : (
+            jobs.map((job) => (
+              <div key={job.id} className="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow flex flex-col">
+                <div className="inline-block px-3 py-1 bg-brand-orange/10 text-brand-orange rounded-full text-sm font-semibold mb-4 self-start">
+                  {job.type}
+                </div>
+                <h3 className="text-2xl font-serif font-bold text-brand-dark mb-2">{job.title}</h3>
+                <p className="text-gray-600 mb-6 whitespace-pre-wrap flex-grow line-clamp-3">{job.description}</p>
+                <button 
+                  onClick={() => setSelectedJob(job)}
+                  className="w-full bg-[#1F1916] text-white py-3 rounded-full font-semibold hover:bg-brand-orange transition-colors mt-auto"
+                >
+                  Know More
+                </button>
+              </div>
+            ))
+          )}
         </motion.div>
 
         <motion.div
@@ -96,6 +134,79 @@ const Careers = () => {
           </a>
         </motion.div>
       </div>
+
+      <AnimatePresence>
+        {selectedJob && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 pb-[15vh] bg-black/50 backdrop-blur-sm"
+            onClick={() => setSelectedJob(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-3xl p-6 md:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative"
+            >
+              <button 
+                onClick={() => setSelectedJob(null)}
+                className="absolute top-6 right-6 p-2 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              
+              <div className="inline-block px-3 py-1 bg-brand-orange/10 text-brand-orange rounded-full text-sm font-semibold mb-4">
+                {selectedJob.type}
+              </div>
+              <h2 className="text-3xl font-serif font-bold text-brand-dark mb-6">{selectedJob.title}</h2>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                {selectedJob.department && (
+                  <div className="flex items-center text-gray-600 gap-3">
+                    <Building className="w-5 h-5 text-gray-400" /> 
+                    <span>{selectedJob.department}</span>
+                  </div>
+                )}
+                {selectedJob.location && (
+                  <div className="flex items-center text-gray-600 gap-3">
+                    <MapPin className="w-5 h-5 text-gray-400" /> 
+                    <span>{selectedJob.location}</span>
+                  </div>
+                )}
+                {selectedJob.experience && (
+                  <div className="flex items-center text-gray-600 gap-3">
+                    <Briefcase className="w-5 h-5 text-gray-400" /> 
+                    <span>{selectedJob.experience}</span>
+                  </div>
+                )}
+                {selectedJob.salary && (
+                  <div className="flex items-center text-gray-600 gap-3">
+                    <IndianRupee className="w-5 h-5 text-gray-400" /> 
+                    <span>{selectedJob.salary}</span>
+                  </div>
+                )}
+              </div>
+              
+              <div className="mb-8">
+                <h4 className="text-lg font-bold text-gray-900 mb-2">Job Description</h4>
+                <p className="text-gray-600 whitespace-pre-wrap leading-relaxed">
+                  {selectedJob.description}
+                </p>
+              </div>
+              
+              <a 
+                href={`mailto:careers@mukeshgraphics.com?subject=Application for ${encodeURIComponent(selectedJob.title)}`}
+                className="block w-full text-center bg-brand-orange text-white py-4 rounded-full font-bold text-lg hover:bg-[#1F1916] transition-colors shadow-lg hover:shadow-xl"
+              >
+                Apply Now
+              </a>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

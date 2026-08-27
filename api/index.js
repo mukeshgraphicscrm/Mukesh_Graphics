@@ -29,6 +29,17 @@ app.post('/api/quote', async (req, res) => {
   }
 });
 
+app.get('/api/jobs', async (req, res) => {
+  try {
+    const snapshot = await adminDb.collection('job_posted').where('status', '==', 'Active').get();
+    const jobs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    res.status(200).json({ success: true, jobs });
+  } catch (error) {
+    console.error('Error fetching jobs:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
 // Expose the Express app for Vercel Serverless Functions
 export default app;
 
