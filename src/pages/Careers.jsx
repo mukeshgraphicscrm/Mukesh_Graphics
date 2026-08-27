@@ -222,17 +222,18 @@ const Careers = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-3xl p-6 md:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative"
+              className="bg-white rounded-3xl max-w-2xl w-full shadow-2xl relative overflow-hidden flex flex-col"
             >
               <button
                 onClick={closeModal}
-                className="absolute top-6 right-6 p-2 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
+                className="absolute top-6 right-6 p-2 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-full transition-colors cursor-pointer z-10 bg-white shadow-sm"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="inline-block px-3 py-1 bg-brand-orange/10 text-brand-orange rounded-full text-sm font-semibold mb-4">
-                {selectedJob.type}
+              <div className="p-6 md:p-8 max-h-[90vh] overflow-y-auto relative">
+                <div className="inline-block px-3 py-1 bg-brand-orange/10 text-brand-orange rounded-full text-sm font-semibold mb-4">
+                  {selectedJob.type}
               </div>
               <h2 className="text-3xl font-serif font-bold text-brand-dark mb-6">{selectedJob.title}</h2>
 
@@ -342,6 +343,7 @@ const Careers = () => {
                   </button>
                 </motion.div>
               )}
+              </div>
             </motion.div>
           </motion.div>
         )}
