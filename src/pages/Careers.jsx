@@ -63,8 +63,9 @@ const Careers = () => {
   }, []);
 
   return (
-    <motion.div 
-      initial="initial"
+    <>
+      <motion.div 
+        initial="initial"
       animate="in"
       exit="out"
       variants={pageVariants}
@@ -134,6 +135,7 @@ const Careers = () => {
           </a>
         </motion.div>
       </div>
+      </motion.div>
 
       <AnimatePresence>
         {selectedJob && (
@@ -141,7 +143,7 @@ const Careers = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 pb-[15vh] bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
             onClick={() => setSelectedJob(null)}
           >
             <motion.div
@@ -207,7 +209,7 @@ const Careers = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </>
   );
 };
 
