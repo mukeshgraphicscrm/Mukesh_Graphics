@@ -103,15 +103,19 @@ const Careers = () => {
             </div>
           ) : (
             jobs.map((job) => (
-              <div key={job.id} className="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow flex flex-col">
+              <div 
+                key={job.id} 
+                onClick={() => setSelectedJob(job)}
+                className="bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow flex flex-col cursor-pointer"
+              >
                 <div className="inline-block px-3 py-1 bg-brand-orange/10 text-brand-orange rounded-full text-sm font-semibold mb-4 self-start">
                   {job.type}
                 </div>
                 <h3 className="text-2xl font-serif font-bold text-brand-dark mb-2">{job.title}</h3>
                 <p className="text-gray-600 mb-6 whitespace-pre-wrap flex-grow line-clamp-3">{job.description}</p>
                 <button 
-                  onClick={() => setSelectedJob(job)}
-                  className="w-full bg-[#1F1916] text-white py-3 rounded-full font-semibold hover:bg-brand-orange transition-colors mt-auto"
+                  onClick={(e) => { e.stopPropagation(); setSelectedJob(job); }}
+                  className="w-full bg-[#1F1916] text-white py-3 rounded-full font-semibold hover:bg-brand-orange transition-colors mt-auto cursor-pointer"
                 >
                   Know More
                 </button>
@@ -130,7 +134,7 @@ const Careers = () => {
           <p className="text-gray-600 mb-6">
             Send us your resume anyway! We are always looking for great talent.
           </p>
-          <a href="mailto:careers@mukeshgraphics.com" className="inline-flex items-center justify-center bg-brand-orange text-white px-8 py-4 rounded-full font-semibold hover:bg-[#1F1916] transition-colors shadow-lg hover:shadow-xl">
+          <a href="mailto:careers@mukeshgraphics.com" className="inline-flex items-center justify-center bg-brand-orange text-white px-8 py-4 rounded-full font-semibold hover:bg-[#1F1916] transition-colors shadow-lg hover:shadow-xl cursor-pointer">
             Email Your Resume
           </a>
         </motion.div>
@@ -155,7 +159,7 @@ const Careers = () => {
             >
               <button 
                 onClick={() => setSelectedJob(null)}
-                className="absolute top-6 right-6 p-2 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-full transition-colors"
+                className="absolute top-6 right-6 p-2 text-gray-400 hover:text-gray-800 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -201,7 +205,7 @@ const Careers = () => {
               
               <a 
                 href={`mailto:careers@mukeshgraphics.com?subject=Application for ${encodeURIComponent(selectedJob.title)}`}
-                className="block w-full text-center bg-brand-orange text-white py-4 rounded-full font-bold text-lg hover:bg-[#1F1916] transition-colors shadow-lg hover:shadow-xl"
+                className="block w-full text-center bg-brand-orange text-white py-4 rounded-full font-bold text-lg hover:bg-[#1F1916] transition-colors shadow-lg hover:shadow-xl cursor-pointer"
               >
                 Apply Now
               </a>
