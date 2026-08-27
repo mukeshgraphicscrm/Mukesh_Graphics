@@ -35,7 +35,7 @@ function BoxTextureMaterial({ artworkUrl, baseColor, finishProps }) {
     }
   }, [texture]);
 
-  return <meshPhysicalMaterial color={baseColor} map={texture} side={THREE.DoubleSide} {...finishProps} />;
+  return <meshPhysicalMaterial color="#ffffff" map={texture} transparent={true} side={THREE.DoubleSide} {...finishProps} />;
 }
 
 // --- 3D Box Component ---
@@ -172,7 +172,7 @@ function BoxPreview({ dimensions, isRotating, artworkUrl, boxStructure, material
         </group>
       </Bounds>
       <ContactShadows position={[0, -h / 2 - 0.01, 0]} opacity={0.4} scale={10} blur={2} far={4} />
-      <Environment preset="city" />
+      <Environment preset="city" intensity={1.5} />
     </group>
   );
 }
@@ -682,8 +682,8 @@ Finishing: ${finishing}`;
                 >
                   {/* 3D Canvas */}
                   <Canvas camera={{ position: [0, 2, 5], fov: 45 }}>
-                    <ambientLight intensity={0.5} />
-                    <directionalLight position={[10, 10, 5]} intensity={1} />
+                    <ambientLight intensity={1.5} />
+                    <directionalLight position={[10, 10, 5]} intensity={1.5} />
                     <BoxPreview dimensions={dimensions} isRotating={isRotating} artworkUrl={artworkUrl} boxStructure={boxStructure} material={material} finishing={finishing} />
                     <OrbitControls makeDefault enableZoom={true} enablePan={false} />
                   </Canvas>
