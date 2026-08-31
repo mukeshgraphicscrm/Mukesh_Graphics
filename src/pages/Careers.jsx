@@ -300,7 +300,7 @@ const Careers = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
-                    <input type="tel" name="phone" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors" placeholder="+91 98765 43210" />
+                    <input type="tel" name="phone" required pattern="[0-9]{10}" minLength="10" maxLength="10" onInput={(e) => { e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 10); }} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors" placeholder="9876543210" title="Please enter a valid 10-digit phone number" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Resume/CV (PDF, Max 5MB)</label>
