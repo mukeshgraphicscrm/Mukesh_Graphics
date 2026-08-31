@@ -47,6 +47,11 @@ const Careers = () => {
 
       let resumeUrl = '';
       if (resumeFile && resumeFile.size > 0) {
+        if (resumeFile.size > 5 * 1024 * 1024) {
+          alert('Resume file size must be less than 5MB.');
+          setIsSubmitting(false);
+          return;
+        }
         const storageRef = ref(storage, `resumes/${Date.now()}_${resumeFile.name.replace(/[^a-zA-Z0-9.]/g, '_')}`);
         const uploadResult = await uploadBytes(storageRef, resumeFile);
         resumeUrl = await getDownloadURL(uploadResult.ref);
@@ -298,7 +303,7 @@ const Careers = () => {
                     <input type="tel" name="phone" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors" placeholder="+91 98765 43210" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Resume/CV (PDF)</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Resume/CV (PDF, Max 5MB)</label>
                     <input type="file" name="resume" accept=".pdf" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-orange focus:border-brand-orange outline-none transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-orange/10 file:text-brand-orange hover:file:bg-brand-orange/20 cursor-pointer file:cursor-pointer text-gray-500" />
                   </div>
                   <div>
