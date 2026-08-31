@@ -206,7 +206,7 @@ const Careers = () => {
             <p className="text-gray-600 mb-6">
               Send us your resume anyway! We are always looking for great talent.
             </p>
-            <a href="mailto:careers@mukeshgraphics.com" className="inline-flex items-center justify-center bg-brand-orange text-white px-8 py-4 rounded-full font-semibold hover:bg-[#1F1916] transition-colors shadow-lg hover:shadow-xl cursor-pointer">
+            <a href="mailto:marketing.mukeshgraphics@gmail.com" className="inline-flex items-center justify-center bg-brand-orange text-white px-8 py-4 rounded-full font-semibold hover:bg-[#1F1916] transition-colors shadow-lg hover:shadow-xl cursor-pointer">
               Email Your Resume
             </a>
           </motion.div>
