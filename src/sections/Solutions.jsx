@@ -129,28 +129,31 @@ const Solutions = () => {
             <motion.div 
               variants={fadeInUp}
               key={idx} 
-              className={`p-7 rounded-3xl bg-[#0A0A0A] border border-white/5 hover:border-brand-orange hover:shadow-[0_8px_30px_rgba(255,127,63,0.1)] hover:-translate-y-2 transition-all duration-300 group cursor-pointer flex flex-col justify-between h-full relative overflow-hidden ${solution.span}`}
+              className={`p-7 rounded-3xl bg-[#0A0A0A] border border-white/5 hover:border-brand-orange/50 hover:shadow-[0_8px_30px_rgba(255,127,63,0.15)] hover:-translate-y-2 transition-all duration-500 group cursor-pointer flex flex-col justify-between h-full relative overflow-hidden ${solution.span}`}
             >
-              {/* Background product image - always visible */}
+              {/* Background product image — brightens on hover */}
               {solution.img && (
                 <div className="absolute inset-0 rounded-3xl overflow-hidden">
                   <img
                     src={solution.img}
                     alt={solution.title}
-                    className="w-full h-full object-cover opacity-20 group-hover:opacity-35 transition-opacity duration-500 group-hover:scale-105 scale-100 transition-transform duration-700"
+                    className="w-full h-full object-cover opacity-20 group-hover:opacity-90 scale-100 group-hover:scale-110 transition-all duration-700 ease-out"
                   />
+                  {/* Dark overlay — fades out on hover to reveal image */}
+                  <div className="absolute inset-0 bg-black/60 group-hover:bg-black/10 transition-all duration-500" />
                 </div>
               )}
 
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,127,63,0.2),transparent_250px)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              
-              <div className="flex justify-between items-start mb-8 relative z-10">
-                <div className="w-[50px] h-[50px] rounded-full bg-[#1a0f08] group-hover:bg-brand-orange flex items-center justify-center text-brand-orange group-hover:text-white transition-all duration-300 group-hover:scale-110">
+              {/* Icon + arrow — fade slightly on hover */}
+              <div className="flex justify-between items-start mb-8 relative z-10 group-hover:opacity-40 group-hover:blur-[1px] transition-all duration-400">
+                <div className="w-[50px] h-[50px] rounded-full bg-[#1a0f08] flex items-center justify-center text-brand-orange">
                   {solution.icon}
                 </div>
-                <ArrowUpRight size={20} strokeWidth={1.5} className="text-gray-600 transition-colors duration-300 group-hover:text-brand-orange" />
+                <ArrowUpRight size={20} strokeWidth={1.5} className="text-gray-600" />
               </div>
-              <div className="relative z-10">
+
+              {/* Text — blurs and fades on hover */}
+              <div className="relative z-10 group-hover:opacity-30 group-hover:blur-[2px] transition-all duration-400">
                 <h4 className="text-[1.35rem] font-serif font-bold mb-2 text-white">{solution.title}</h4>
                 <p className="text-[0.9rem] text-gray-400 leading-relaxed">{solution.desc}</p>
               </div>
