@@ -50,8 +50,8 @@ const Solutions = () => {
     { 
       span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", 
       icon: <Shirt size={24} />, 
-      title: "Garment Packaging", 
-      desc: "Retail-ready folding cartons.",
+      title: "Dangler & Toran", 
+      desc: "Eye-catching POS display materials.",
       img: "/images/img_dangler_toran.jpeg"
     },
     { 
@@ -64,8 +64,8 @@ const Solutions = () => {
     { 
       span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", 
       icon: <Package size={24} />, 
-      title: "Shipping Cartons", 
-      desc: "Bulk export-grade cartons.",
+      title: "Punjabi & Kulfi Box", 
+      desc: "Tall-format ice cream & kulfi packaging.",
       img: "/images/img_punjabi_box.jpeg"
     },
     { 

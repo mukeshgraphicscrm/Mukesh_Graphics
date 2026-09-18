@@ -97,42 +97,6 @@ const Hero = () => {
                 </div>
               </motion.div>
 
-              {/* Floating accent image — top right */}
-              <motion.div
-                animate={{ y: [-8, 8, -8] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-6 -right-6 w-[46%] rounded-[1.5rem] overflow-hidden shadow-xl shadow-orange-900/20 aspect-[4/3] border-4 border-white"
-              >
-                <img
-                  src="/images/img_perfume_box.jpeg"
-                  alt="Luxury Perfume Packaging"
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-
-              {/* Floating accent image — bottom left */}
-              <motion.div
-                animate={{ y: [8, -8, 8] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute -bottom-6 -left-6 w-[44%] rounded-[1.5rem] overflow-hidden shadow-xl shadow-orange-900/20 aspect-square border-4 border-white"
-              >
-                <img
-                  src="/images/img_electronic_box.jpeg"
-                  alt="Electronics Packaging"
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-
-              {/* Stats badge — floating right middle */}
-              <motion.div
-                animate={{ y: [-6, 6, -6] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute top-1/2 -right-8 -translate-y-1/2 bg-white rounded-2xl px-4 py-3 shadow-xl shadow-orange-900/15 border border-orange-50 hidden lg:flex flex-col items-center"
-              >
-                <span className="text-2xl font-serif font-bold text-[#FF7B3B] leading-none">20+</span>
-                <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wide mt-0.5">Years</span>
-              </motion.div>
-
             </div>
           </div>
 
