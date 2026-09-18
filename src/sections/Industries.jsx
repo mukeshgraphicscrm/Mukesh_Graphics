@@ -5,7 +5,7 @@ import { staggerContainer, fadeInUp, scaleUp } from '../utils/animations';
 
 const Industries = () => {
   const [activeTab, setActiveTab] = useState('fmcg');
-  
+
   const tags = [
     'FMCG', 'Food & Beverage', 'Pharmaceuticals', 'Cosmetics',
     'Electronics', 'Garments', 'Retail', 'E-Commerce', 'Automotive',
@@ -16,8 +16,8 @@ const Industries = () => {
     <section id="industries" className="py-24 bg-[#FDF3E7] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          
-          <motion.div 
+
+          <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
@@ -27,17 +27,17 @@ const Industries = () => {
               <span className="w-1.5 h-1.5 rounded-full bg-brand-orange"></span>
               <h2 className="text-[0.75rem] font-bold text-brand-orange uppercase tracking-[0.15em]">Industries We Serve</h2>
             </motion.div>
-            
+
             <motion.h3 variants={fadeInUp} className="text-4xl md:text-[4rem] font-serif font-bold leading-[1.1] mb-8 text-[#111111]">
               Trusted by brands<br />
               across <span className="text-brand-orange">twelve</span><br />
               <span className="text-brand-orange">industries.</span>
             </motion.h3>
-            
+
             <motion.p variants={fadeInUp} className="text-[1.05rem] text-gray-600 leading-relaxed mb-10 max-w-xl">
               Whether it's a fragile electronic component, a temperature-sensitive pharma dose, or a luxury cosmetic launch — our packaging is engineered to the industry it lives in.
             </motion.p>
-            
+
             <motion.div variants={fadeInUp} className="flex flex-wrap gap-3">
               {tags.map((tag, idx) => (
                 <div
@@ -49,8 +49,8 @@ const Industries = () => {
               ))}
             </motion.div>
           </motion.div>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -59,9 +59,9 @@ const Industries = () => {
           >
             {/* Soft radial glow behind the center */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,127,63,0.15),transparent_60%)] pointer-events-none" />
-            
+
             {/* Outer Orbit (100% width) - Spins clockwise */}
-            <div 
+            <div
               className="absolute w-full h-full rounded-full border border-brand-orange/20"
               style={{ animation: 'spin 60s linear infinite' }}
             >
@@ -80,7 +80,7 @@ const Industries = () => {
             </div>
 
             {/* Inner Orbit (70% width) - Spins counter-clockwise */}
-            <div 
+            <div
               className="absolute w-[70%] h-[70%] rounded-full border border-brand-orange/20"
               style={{ animation: 'spin 45s linear infinite reverse' }}
             >
@@ -97,7 +97,7 @@ const Industries = () => {
                 <Utensils size={22} strokeWidth={1.5} />
               </div>
             </div>
-            
+
             {/* Central Circle */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[136px] h-[136px] rounded-full bg-brand-orange flex flex-col items-center justify-center shadow-xl shadow-brand-orange/30 z-20">
               <span className="text-[0.65rem] font-bold tracking-[0.15em] uppercase text-white/90 mb-1">Serving</span>
@@ -105,7 +105,7 @@ const Industries = () => {
               <span className="text-[0.65rem] font-bold tracking-[0.15em] uppercase text-white/90">Sectors</span>
             </div>
           </motion.div>
-          
+
         </div>
       </div>
     </section>

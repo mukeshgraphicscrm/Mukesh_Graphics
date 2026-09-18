@@ -1,6 +1,5 @@
 import { ShieldCheck, Factory, Truck } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { BoxSvg } from '../components/BoxSvg';
 import { staggerContainer, fadeInUp } from '../utils/animations';
 import { smoothScroll } from '../utils/smoothScroll';
 
@@ -68,31 +67,70 @@ const Hero = () => {
 
           {/* Image/Visuals */}
           <div className="relative h-full flex items-center justify-center lg:justify-end lg:-mt-4">
-            <div className="relative w-full max-w-[500px] lg:max-w-[88%] rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#4A0B0B] to-[#1A0303] aspect-[4/4] lg:aspect-[4/5] shadow-2xl">
+            <div className="relative w-full max-w-[520px] lg:max-w-[92%]">
 
-              {/* 3D Floating Boxes */}
+              {/* Main large hero image */}
               <motion.div
-                animate={{ y: [-15, 15, -15] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-8 left-8 w-32 h-32 -rotate-12 opacity-90 drop-shadow-[0_15px_15px_rgba(0,0,0,0.5)]"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="rounded-[2.5rem] overflow-hidden shadow-2xl shadow-orange-900/20 aspect-[4/5] w-full relative"
               >
-                <BoxSvg open={true} dark={false} className="w-full h-full" />
+                <img
+                  src="/images/img_masala_box.jpeg"
+                  alt="Premium Custom Packaging by Mukesh Graphics"
+                  className="w-full h-full object-cover"
+                />
+                {/* Subtle gradient overlay for text readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                {/* Bottom badge */}
+                <div className="absolute bottom-6 left-6 right-6">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-5 py-3 flex items-center gap-3 shadow-lg">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#FF954B] to-[#FF6B2B] flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-[10px] font-bold">✓</span>
+                    </div>
+                    <div>
+                      <div className="text-[11px] font-bold text-[#1F1916] leading-tight">Premium Printed Packaging</div>
+                      <div className="text-[10px] text-gray-500">Offset • Digital • Flexo • UV</div>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
 
+              {/* Floating accent image — top right */}
               <motion.div
-                animate={{ y: [15, -15, 15] }}
-                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] w-64 h-64 rotate-6 opacity-100 drop-shadow-[0_20px_20px_rgba(0,0,0,0.6)]"
-              >
-                <BoxSvg open={false} dark={true} className="w-full h-full" />
-              </motion.div>
-
-              <motion.div
-                animate={{ y: [-10, 10, -10] }}
+                animate={{ y: [-8, 8, -8] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute bottom-16 right-4 w-40 h-40 rotate-[25deg] opacity-90 drop-shadow-[0_15px_15px_rgba(0,0,0,0.5)]"
+                className="absolute -top-6 -right-6 w-[46%] rounded-[1.5rem] overflow-hidden shadow-xl shadow-orange-900/20 aspect-[4/3] border-4 border-white"
               >
-                <BoxSvg open={true} dark={true} className="w-full h-full" />
+                <img
+                  src="/images/img_perfume_box.jpeg"
+                  alt="Luxury Perfume Packaging"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+
+              {/* Floating accent image — bottom left */}
+              <motion.div
+                animate={{ y: [8, -8, 8] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute -bottom-6 -left-6 w-[44%] rounded-[1.5rem] overflow-hidden shadow-xl shadow-orange-900/20 aspect-square border-4 border-white"
+              >
+                <img
+                  src="/images/img_electronic_box.jpeg"
+                  alt="Electronics Packaging"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+
+              {/* Stats badge — floating right middle */}
+              <motion.div
+                animate={{ y: [-6, 6, -6] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                className="absolute top-1/2 -right-8 -translate-y-1/2 bg-white rounded-2xl px-4 py-3 shadow-xl shadow-orange-900/15 border border-orange-50 hidden lg:flex flex-col items-center"
+              >
+                <span className="text-2xl font-serif font-bold text-[#FF7B3B] leading-none">20+</span>
+                <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wide mt-0.5">Years</span>
               </motion.div>
 
             </div>

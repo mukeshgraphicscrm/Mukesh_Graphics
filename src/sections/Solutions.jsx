@@ -5,18 +5,90 @@ import { staggerContainer, fadeInUp } from '../utils/animations';
 
 const Solutions = () => {
   const solutions = [
-    { span: "md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2", icon: <Box size={24} />, title: "FBB Paper Boxes", desc: "3-ply, 5-ply & 7-ply strength-engineered cartons." },
-    { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <Palette size={24} />, title: "Printed Packaging", desc: "Offset & digital, edge-to-edge color." },
-    { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <Coffee size={24} />, title: "Food Packaging", desc: "Food-safe stocks & barrier coatings." },
-    { span: "md:col-span-2 md:row-span-1 lg:col-span-2 lg:row-span-1", icon: <Sparkles size={24} />, title: "Cosmetic Boxes", desc: "Foil, deboss & silk lamination." },
-    { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <Pill size={24} />, title: "Pharmaceutical", desc: "Compliant cartons with batch coding." },
-    { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <Cpu size={24} />, title: "Electronics", desc: "Anti-static, EPE-fit inserts." },
-    { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <Shirt size={24} />, title: "Garment Packaging", desc: "Retail-ready folding cartons." },
-    { span: "md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2", icon: <Gift size={24} />, title: "Gift Boxes", desc: "Mono Carton, magnetic-close & drawer boxes." },
-    { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <Package size={24} />, title: "Shipping Cartons", desc: "Bulk export-grade cartons." },
-    { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <Globe2 size={24} />, title: "Export Packaging", desc: "ISPM-15 & humidity resistant." },
-    { span: "md:col-span-2 md:row-span-1 lg:col-span-2 lg:row-span-1", icon: <Gem size={24} />, title: "Luxury Mono Carton Boxes", desc: "Museum-grade unboxing experiences." },
-    { span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", icon: <PenTool size={24} />, title: "Fully Custom", desc: "Design → die-line → production." },
+    { 
+      span: "md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2", 
+      icon: <Box size={24} />, 
+      title: "FBB Paper Boxes", 
+      desc: "3-ply, 5-ply & 7-ply strength-engineered cartons.",
+      img: "/images/img_food_box.jpeg"
+    },
+    { 
+      span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", 
+      icon: <Palette size={24} />, 
+      title: "Printed Packaging", 
+      desc: "Offset & digital, edge-to-edge color.",
+      img: "/images/img_masala_box.jpeg"
+    },
+    { 
+      span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", 
+      icon: <Coffee size={24} />, 
+      title: "Food Packaging", 
+      desc: "Food-safe stocks & barrier coatings.",
+      img: "/images/img_instant_mix_box.jpeg"
+    },
+    { 
+      span: "md:col-span-2 md:row-span-1 lg:col-span-2 lg:row-span-1", 
+      icon: <Sparkles size={24} />, 
+      title: "Cosmetic Boxes", 
+      desc: "Foil, deboss & silk lamination.",
+      img: "/images/img_haircare_box.jpeg"
+    },
+    { 
+      span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", 
+      icon: <Pill size={24} />, 
+      title: "Pharmaceutical", 
+      desc: "Compliant cartons with batch coding.",
+      img: "/images/img_pharma_box.jpeg"
+    },
+    { 
+      span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", 
+      icon: <Cpu size={24} />, 
+      title: "Electronics", 
+      desc: "Anti-static, EPE-fit inserts.",
+      img: "/images/img_electronic_box.jpeg"
+    },
+    { 
+      span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", 
+      icon: <Shirt size={24} />, 
+      title: "Garment Packaging", 
+      desc: "Retail-ready folding cartons.",
+      img: "/images/img_dangler_toran.jpeg"
+    },
+    { 
+      span: "md:col-span-2 md:row-span-2 lg:col-span-2 lg:row-span-2", 
+      icon: <Gift size={24} />, 
+      title: "Gift & Luxury Boxes", 
+      desc: "Mono Carton, magnetic-close & drawer boxes.",
+      img: "/images/img_perfume_box.jpeg"
+    },
+    { 
+      span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", 
+      icon: <Package size={24} />, 
+      title: "Shipping Cartons", 
+      desc: "Bulk export-grade cartons.",
+      img: "/images/img_punjabi_box.jpeg"
+    },
+    { 
+      span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", 
+      icon: <Globe2 size={24} />, 
+      title: "Export Packaging", 
+      desc: "ISPM-15 & humidity resistant.",
+      img: "/images/img_agriculture_box.jpeg"
+    },
+    { 
+      span: "md:col-span-2 md:row-span-1 lg:col-span-2 lg:row-span-1", 
+      icon: <Gem size={24} />, 
+      title: "Luxury Mono Carton Boxes", 
+      desc: "Museum-grade unboxing experiences.",
+      img: "/images/img_candy_box.jpeg"
+    },
+    { 
+      span: "md:col-span-1 md:row-span-1 lg:col-span-1 lg:row-span-1", 
+      icon: <PenTool size={24} />, 
+      title: "Fully Custom", 
+      desc: "Design → die-line → production.",
+      img: "/images/img_pizza_box.jpeg"
+    },
   ];
 
   return (
@@ -59,6 +131,17 @@ const Solutions = () => {
               key={idx} 
               className={`p-7 rounded-3xl bg-[#0A0A0A] border border-white/5 hover:border-brand-orange hover:shadow-[0_8px_30px_rgba(255,127,63,0.1)] hover:-translate-y-2 transition-all duration-300 group cursor-pointer flex flex-col justify-between h-full relative overflow-hidden ${solution.span}`}
             >
+              {/* Background product image - always visible */}
+              {solution.img && (
+                <div className="absolute inset-0 rounded-3xl overflow-hidden">
+                  <img
+                    src={solution.img}
+                    alt={solution.title}
+                    className="w-full h-full object-cover opacity-20 group-hover:opacity-35 transition-opacity duration-500 group-hover:scale-105 scale-100 transition-transform duration-700"
+                  />
+                </div>
+              )}
+
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,127,63,0.2),transparent_250px)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
               
               <div className="flex justify-between items-start mb-8 relative z-10">
