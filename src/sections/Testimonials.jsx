@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { Star, X, ChevronLeft, ChevronRight, Quote, Users } from 'lucide-react';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase/config';
@@ -80,7 +81,7 @@ const AllReviewsModal = ({ reviews, onClose }) => {
     return () => { document.body.style.overflow = ''; };
   }, []);
 
-  return (
+  return createPortal(
     <div className="tst-modal-overlay" onClick={onClose}>
       <div className="tst-modal" onClick={(e) => e.stopPropagation()}>
         <div className="tst-modal-header">
@@ -110,7 +111,8 @@ const AllReviewsModal = ({ reviews, onClose }) => {
           ))}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
@@ -133,12 +135,7 @@ const Testimonials = () => {
       (snap) => {
         const data = snap.docs
           .map((d) => ({ id: d.id, ...d.data() }))
-          .sort((a, b) => {
-            // sort by createdAt descending (works for both Timestamp and ISO string)
-            const aTime = a.createdAt?.toMillis?.() ?? new Date(a.createdAt).getTime() ?? 0;
-            const bTime = b.createdAt?.toMillis?.() ?? new Date(b.createdAt).getTime() ?? 0;
-            return bTime - aTime;
-          });
+          .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
         setReviews(data);
         setLoading(false);
       },
@@ -453,7 +450,7 @@ const tstCss = `
   position: fixed; inset: 0;
   background: rgba(15,10,5,0.65);
   backdrop-filter: blur(6px);
-  z-index: 1000;
+  z-index: 99999;
   display: flex; align-items: center; justify-content: center;
   padding: 1rem;
   animation: tst-fade-in 250ms ease;
